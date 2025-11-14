@@ -120,8 +120,8 @@ function extinguishFlame() {
 
     // Tampilkan pesan
     message.classList.remove('hidden');
-    message.textContent = "Hore! Lilinnya padam! ";
-        <a href = "halaman_lain.html">Buka halaman lain</a>
+    //message.textContent = "Hore! Lilinnya padam! ";
+    <a href = "halaman_lain.html">Buka halaman lain</a>
         //"Hore! Lilinnya padam! ";
     //<a href="halaman_lain.html">Buka halaman lain</a>
 
@@ -146,6 +146,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
