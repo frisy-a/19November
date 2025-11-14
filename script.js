@@ -120,7 +120,7 @@ function extinguishFlame() {
 
     // Tampilkan pesan
     message.classList.remove('hidden');
-    //message.textContent = "Hore! Lilinnya padam! "
+    message.textContent = "Hore! Lilinnya padam! "
 
       // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
@@ -141,6 +141,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
