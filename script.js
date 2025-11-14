@@ -120,7 +120,7 @@ function extinguishFlame() {
 
     // Tampilkan pesan
     message.classList.remove('hidden');
-    message.textContent = <a href="halaman_lain.html">Buka halaman lain</a>
+    message.<a href = "halaman_lain.html">Buka halaman lain</a>
         //"Hore! Lilinnya padam! ";
     //<a href="halaman_lain.html">Buka halaman lain</a>
 
