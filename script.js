@@ -121,13 +121,8 @@ function extinguishFlame() {
     // Tampilkan pesan
     message.classList.remove('hidden');
     message.textContent = "Hore! Lilinnya padam! ";
-    //<a href = "halaman_lain.html">Buka halaman lain</a>
-        //"Hore! Lilinnya padam! ";
-    //<a href="halaman_lain.html">Buka halaman lain</a>
 
-  
-
-    // Putar lagu ulang tahun
+      // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
     birthdaySong.play().catch((error) => {
         console.warn("Autoplay prevented:", error);
@@ -146,6 +141,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
