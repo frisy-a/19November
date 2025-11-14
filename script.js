@@ -120,11 +120,19 @@ function extinguishFlame() {
 
     // Tampilkan pesan
     message.classList.remove('hidden');
-    message.textContent = "Hore! Lilinnya padam! ";
-    const myButton = document.getElementById('myButton');
-const messageArea = document.getElementById('messageArea');
+    message.textContent =     const container = document.getElementById('myParagraph'); // <p id="myParagraph">Click here</p> 
+container.textContent = ''; // remove old text (or use innerHTML carefully) 
+const link = document.createElement('a'); 
+link.href = 'https://example.com'; 
+link.textContent = 'Click here'; 
+container.appendChild(link); 
+        
+        
+        
+        
+        //"Hore! Lilinnya padam! ";
 
-myButton.addEventListener('click', function()
+  
 
     // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
@@ -145,3 +153,4 @@ myButton.addEventListener('click', function()
 
 
 window.onload = initMic;
+
