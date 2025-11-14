@@ -120,17 +120,9 @@ function extinguishFlame() {
 
     // Tampilkan pesan
     message.classList.remove('hidden');
-    message.textContent =     const container = document.getElementById('myParagraph'); // <p id="myParagraph">Click here</p> 
-container.textContent = ''; // remove old text (or use innerHTML carefully) 
-const link = document.createElement('a'); 
-link.href = 'https://example.com'; 
-link.textContent = 'Click here'; 
-container.appendChild(link); 
-        
-        
-        
-        
+    message.textContent = <a href="halaman_lain.html">Buka halaman lain</a>
         //"Hore! Lilinnya padam! ";
+    //<a href="halaman_lain.html">Buka halaman lain</a>
 
   
 
@@ -153,4 +145,5 @@ container.appendChild(link);
 
 
 window.onload = initMic;
+
 
