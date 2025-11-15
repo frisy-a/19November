@@ -121,17 +121,52 @@ function extinguishFlame() {
     // Tampilkan pesan
     message.classList.remove('hidden');
     
-    {
+   {
+    // Buat elemen tombol
     const a = document.createElement('a');
     a.className = "gift-button";
     a.href = "https://frisy-a.github.io/19November/flower.html";
     a.title = "Selamat lilinnya sudah padam! Buka hadiahnya di sini";
-    a.innerHTML = '<span class="gift-emoji">🎁</span> Buka Hadiah';
+    a.innerHTML = `
+        <span class="gift-emoji">🎁</span>
+        Buka Hadiah
+    `;
+
+    // Cegah default click
+    a.addEventListener("click", function (e) {
+        e.preventDefault();
+        showCutePopup(a.href);
+    });
 
     document.body.appendChild(a);
 
-    // Tambahkan style langsung via JS jika tidak ingin CSS terpisah
-   const style = document.createElement("style");
+    // --- Popup lucu ---
+    function showCutePopup(link) {
+        const popup = document.createElement("div");
+        popup.className = "cute-popup";
+
+        popup.innerHTML = `
+            <div class="popup-box">
+                <div class="popup-emoji">✨🎁✨</div>
+                <div class="popup-text">
+                    Yeayy! Kamu berhasil memadamkan lilinnya! 🕯️💖<br>
+                    Siap buka hadiahnya? 🎀
+                </div>
+                <button class="popup-btn">Awww OK 🩷</button>
+            </div>
+        `;
+
+        document.body.appendChild(popup);
+
+        // Tombol OK
+        popup.querySelector(".popup-btn").onclick = () => {
+            popup.remove();
+            window.location.href = link;
+        };
+    }
+
+    // Tambahkan style ke dokumen
+    const style = document.createElement("style");
     style.innerHTML = `
         .gift-button {
             display: inline-flex;
@@ -157,9 +192,65 @@ function extinguishFlame() {
         .gift-emoji {
             font-size: 24px;
         }
+
+        /* --- Popup lucu --- */
+        .cute-popup {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(255, 150, 180, 0.4);
+            backdrop-filter: blur(3px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s ease;
+            z-index: 9999;
+        }
+        .popup-box {
+            background: #fff0f6;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(255, 0, 150, 0.3);
+            animation: popIn 0.35s ease;
+            max-width: 300px;
+        }
+        .popup-emoji {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+        .popup-text {
+            font-size: 16px;
+            color: #ff4f9a;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+        .popup-btn {
+            background: #ff72b6;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.25s;
+        }
+        .popup-btn:hover {
+            background: #ff4a9f;
+            transform: scale(1.07);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; } to { opacity: 1; }
+        }
+        @keyframes popIn {
+            from { transform: scale(0.6); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
     `;
     document.head.appendChild(style);
-    }
+}
 
       // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
@@ -180,6 +271,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
