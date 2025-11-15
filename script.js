@@ -149,10 +149,20 @@ function extinguishFlame() {
             <div class="popup-box">
                 <div class="popup-emoji">✨🎁✨</div>
                 <div class="popup-text">
-                    Yeayy! Kamu berhasil memadamkan lilinnya! 🕯️💖<br>
-                    Siap buka hadiahnya? 🎀
-                </div>
-                <button class="popup-btn">Awww OK 🩷</button>
+                    Yeayyy!! Sekali lagi selamat ulang tahun ya Marr..br><br>
+                    Susah nggak niup Lilinya ☺️☺️☺️
+                    Maaf yaa menyusahkanmu 🥹🥹🥹br><br>
+                    
+                    Hmmm.. Semoga kamu selalu baik-baik saja yaa 💗💗💗
+                    I hope you’re always happy.. surrounded by people who cherish you, 
+                    support you, and love you endlessly just the way you deserve 😇.  
+                    May Lord Jesus always be with you, watching over you, 
+                    guiding your steps, and filling your heart with peace. 
+                    Jesus bless you😇
+                    <br><br>
+                     
+                    Semoga bikin kamu senyum yaa 💞🥰                </div>
+                <button class="popup-btn">lanjut yaa 🩷</button>
             </div>
         `;
 
@@ -319,6 +329,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
