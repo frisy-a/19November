@@ -121,45 +121,45 @@ function extinguishFlame() {
     // Tampilkan pesan
     message.classList.remove('hidden');
     
-   {
-    const a = document.createElement('a');
-    a.className = "gift-button";
-    a.href = "https://frisy-a.github.io/19November/flower.html";
-    a.title = "Selamat lilinnya sudah padam! Buka hadiahnya di sini";
-    a.innerHTML = '<span class="gift-emoji">🎁</span> Buka Hadiah';
+// {
+ //   const a = document.createElement('a');
+  //  a.className = "gift-button";
+   // a.href = "https://frisy-a.github.io/19November/flower.html";
+    //a.title = "Selamat lilinnya sudah padam! Buka hadiahnya di sini";
+    //a.innerHTML = '<span class="gift-emoji">🎁</span> Buka Hadiah';
 
-    document.body.appendChild(a);
+//    document.body.appendChild(a);
 
     // Tambahkan style langsung via JS jika tidak ingin CSS terpisah
-    const style = document.createElement("style");
-    style.innerHTML = `
-        .gift-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: #ff6699;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: bold;
-            text-decoration: none;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 0, 100, 0.3);
-            transition: 0.3s;
-            gap: 10px;
-        }
-        .gift-button:hover {
-            background: #ff3d85;
-            transform: scale(1.07);
-            box-shadow: 0 8px 20px rgba(255, 0, 130, 0.4);
-        }
-        .gift-emoji {
-            font-size: 24px;
-        }
-    `;
-    document.head.appendChild(style);
-}
+  //  const style = document.createElement("style");
+   // style.innerHTML = `
+    //    .gift-button {
+     //       display: inline-flex;
+      //      align-items: center;
+       //     justify-content: center;
+        //    background: #ff6699;
+         //   color: white;
+//            padding: 15px 25px;
+ //           border-radius: 12px;
+  //          font-size: 18px;
+   //         font-weight: bold;
+    //        text-decoration: none;
+     //       cursor: pointer;
+      //      box-shadow: 0 5px 15px rgba(255, 0, 100, 0.3);
+       //     transition: 0.3s;
+        //    gap: 10px;
+       // }
+        //.gift-button:hover {
+        //    background: #ff3d85;
+         //   transform: scale(1.07);
+          //  box-shadow: 0 8px 20px rgba(255, 0, 130, 0.4);
+    //    }
+     //   .gift-emoji {
+      //      font-size: 24px;
+       // }
+//    `;
+ //   document.head.appendChild(style);
+//}
 
       // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
@@ -180,6 +180,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
