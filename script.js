@@ -140,7 +140,7 @@ function extinguishFlame() {
 
     document.body.appendChild(a);
 
-    // --- Popup lucu ---
+    // --- Popup Lucu + Floating Hearts ---
     function showCutePopup(link) {
         const popup = document.createElement("div");
         popup.className = "cute-popup";
@@ -158,11 +158,41 @@ function extinguishFlame() {
 
         document.body.appendChild(popup);
 
+        // Jalankan animasi hati melayang
+        startFloatingHearts(popup);
+
         // Tombol OK
         popup.querySelector(".popup-btn").onclick = () => {
             popup.remove();
             window.location.href = link;
         };
+    }
+
+    // --- Membuat hati melayang ---
+    function startFloatingHearts(container) {
+        const interval = setInterval(() => {
+            // Kalau popup sudah hilang, hentikan animasi
+            if (!document.body.contains(container)) {
+                clearInterval(interval);
+                return;
+            }
+
+            const heart = document.createElement("div");
+            heart.className = "floating-heart";
+            heart.textContent = "💗";
+
+            // Posisi acak secara horizontal
+            heart.style.left = Math.random() * 80 + 10 + "%";
+
+            // Ukuran acak (biar lebih hidup)
+            const size = Math.random() * 20 + 20;
+            heart.style.fontSize = size + "px";
+
+            container.appendChild(heart);
+
+            // Hapus setelah animasi selesai
+            setTimeout(() => heart.remove(), 3000);
+        }, 300); // setiap 0.3 detik bikin 1 hati
     }
 
     // Tambahkan style ke dokumen
@@ -193,7 +223,7 @@ function extinguishFlame() {
             font-size: 24px;
         }
 
-        /* --- Popup lucu --- */
+        /* --- Popup Lucu --- */
         .cute-popup {
             position: fixed;
             top: 0; left: 0;
@@ -205,6 +235,7 @@ function extinguishFlame() {
             align-items: center;
             animation: fadeIn 0.3s ease;
             z-index: 9999;
+            overflow: hidden;
         }
         .popup-box {
             background: #fff0f6;
@@ -214,6 +245,8 @@ function extinguishFlame() {
             box-shadow: 0 8px 20px rgba(255, 0, 150, 0.3);
             animation: popIn 0.35s ease;
             max-width: 300px;
+            position: relative;
+            z-index: 10;
         }
         .popup-emoji {
             font-size: 36px;
@@ -241,8 +274,23 @@ function extinguishFlame() {
             transform: scale(1.07);
         }
 
+        /* --- Floating Hearts --- */
+        .floating-heart {
+            position: absolute;
+            bottom: 20px;
+            animation: rise 3s linear forwards;
+            opacity: 0.9;
+        }
+
+        @keyframes rise {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-250px) scale(1.8); opacity: 0; }
+        }
+
+        /* Animasi popup */
         @keyframes fadeIn {
-            from { opacity: 0; } to { opacity: 1; }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         @keyframes popIn {
             from { transform: scale(0.6); opacity: 0; }
@@ -271,6 +319,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
