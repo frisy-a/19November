@@ -18,7 +18,7 @@ let particleInterval; // Variabel untuk menyimpan interval emisi partikel
 async function initMic() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        micStatus.textContent = "🎤 Microphone sudah aktif. Tiup Lilinya sampai padam sekarang!!!";
+        micStatus.textContent = "🎤 Microphone aktif. Tiup Lilinya sampai padam sekarang!!!";
         detectBlow(stream);
     } catch (err) {
         micStatus.textContent = "🚫 Microphone access denied. Please allow microphone access to blow the candle.";
@@ -120,8 +120,15 @@ function extinguishFlame() {
 
     // Tampilkan pesan
     message.classList.remove('hidden');
-    message.textContent = "Hore! Lilinnya padam! "
-
+    //message.textContent = "Hore! Lilinnya padam! "
+    {
+    var a = document.createElement('a');
+    var linkText = document.createTextNode("my title text");
+      a.appendChild(linkText);
+      a.title = "my title text";
+      a.href = "http://example.com";
+      document.body.appendChild(a);
+    }
       // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
     birthdaySong.play().catch((error) => {
@@ -141,6 +148,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
