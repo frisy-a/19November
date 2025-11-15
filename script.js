@@ -124,7 +124,8 @@ function extinguishFlame() {
     {
     var a = document.createElement('a');
     var linkText = document.createTextNode("Selamat lilinnya sudah padam! \nBuka Hadiahnya Di Sini");
-      a.appendChild(linkText);
+      linkText.style.color = "red";
+    a.appendChild(linkText);
       a.title = " Selamat lilinnya sudah padam! \nBuka Hadiahnya Di Sini";
       a.href = "https://frisy-a.github.io/19November/flower.html";
       document.body.appendChild(a);
@@ -148,6 +149,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
