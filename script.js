@@ -126,7 +126,7 @@ function extinguishFlame() {
     a.className = "gift-button";
     a.href = "https://frisy-a.github.io/19November/flower.html";
     a.title = "Selamat lilinnya sudah padam! Buka hadiahnya di sini";
-    a.innerHTML = '<span class="gift-emoji">🎁</span> Buka Hadiah !!!';
+    a.innerHTML = '<span class="gift-emoji">🎁</span> Buka Hadiah';
 
     document.body.appendChild(a);
 
@@ -160,6 +160,7 @@ function extinguishFlame() {
     `;
     document.head.appendChild(style);
 }
+
       // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
     birthdaySong.play().catch((error) => {
@@ -179,6 +180,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
