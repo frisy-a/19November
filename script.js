@@ -121,7 +121,7 @@ function extinguishFlame() {
     // Tampilkan pesan
     message.classList.remove('hidden');
     
- {
+ 
     const a = document.createElement('a');
     a.className = "gift-button";
     a.href = "https://frisy-a.github.io/19November/flower.html";
@@ -159,7 +159,7 @@ function extinguishFlame() {
         }
     `;
     document.head.appendChild(style);
-}
+
 
       // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
@@ -180,6 +180,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
