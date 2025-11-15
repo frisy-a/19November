@@ -120,7 +120,7 @@ function extinguishFlame() {
 
     // Tampilkan pesan
     message.classList.remove('hidden');
-    {
+    
     <style>
 /* --- Container --- */
 .gift-container {
@@ -223,7 +223,7 @@ function extinguishFlame() {
 </div>
 
 <div class="gift-text">🎁 Klik untuk membuka hadiah 🎁</div>
-}
+
  
     // message.textContent = "SELAMAT";
    // {
@@ -254,6 +254,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
