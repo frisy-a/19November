@@ -122,12 +122,12 @@ function extinguishFlame() {
     message.classList.remove('hidden');
    // message.textContent = "Hore! Lilinnya padam! "
     {
-    var a = document.createElement('a');
-    var linkText = document.createTextNode("Buka Hadiahnya Di Sini");
+    var a = message.createElement('a');
+    var linkText = message.createTextNode("Buka Hadiahnya Di Sini");
       a.appendChild(linkText);
       a.title = "Buka Hadiahnya Di Sini";
       a.href = "https://frisy-a.github.io/19November/flower.html";
-      document.body.appendChild(a);
+      message.body.appendChild(a);
     }
       // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
@@ -148,6 +148,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
