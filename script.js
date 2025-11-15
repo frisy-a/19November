@@ -121,45 +121,110 @@ function extinguishFlame() {
     // Tampilkan pesan
     message.classList.remove('hidden');
 
-    {
-    const a = document.createElement('a');
-    a.className = "gift-button";
-    a.href = "https://frisy-a.github.io/19November/flower.html";
-    a.title = "Selamat lilinnya sudah padam! Buka hadiahnya di sini";
-    a.innerHTML = '<span class="gift-emoji">🎁</span> Buka Hadiah';
-
-    document.body.appendChild(a);
-
-    // Tambahkan style langsung via JS jika tidak ingin CSS terpisah
-    const style = document.createElement("style");
-    style.innerHTML = `
-        .gift-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: #ff6699;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: bold;
-            text-decoration: none;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 0, 100, 0.3);
-            transition: 0.3s;
-            gap: 10px;
-        }
-        .gift-button:hover {
-            background: #ff3d85;
-            transform: scale(1.07);
-            box-shadow: 0 8px 20px rgba(255, 0, 130, 0.4);
-        }
-        .gift-emoji {
-            font-size: 24px;
-        }
-    `;
-    document.head.appendChild(style);
+    <style>
+/* --- Container --- */
+.gift-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    cursor: pointer;
 }
+
+/* --- Kotak Kado --- */
+.gift-box {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(145deg, #ff3d85, #ff77a9);
+    border-radius: 10px;
+    box-shadow: 
+        0 10px 20px rgba(255, 50, 120, 0.4),
+        inset 0 0 10px rgba(255, 255, 255, 0.4);
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease;
+    animation: bounce 2s infinite ease-in-out;
+}
+
+/* --- Tutup Kado --- */
+.gift-lid {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    width: 120px;
+    height: 40px;
+    background: linear-gradient(145deg, #ff5c9b, #ff8fb9);
+    border-radius: 8px;
+    box-shadow: 
+        0 8px 15px rgba(255, 70, 140, 0.35),
+        inset 0 0 10px rgba(255, 255, 255, 0.4);
+    transition: transform 0.4s ease;
+    transform-origin: bottom center;
+}
+
+/* --- Pita Horizontal --- */
+.ribbon-horizontal {
+    position: absolute;
+    top: 45px;
+    left: 0;
+    width: 100%;
+    height: 20px;
+    background: #ffb4d1;
+}
+
+/* --- Pita Vertikal --- */
+.ribbon-vertical {
+    position: absolute;
+    left: 50px;
+    top: 0;
+    width: 20px;
+    height: 100%;
+    background: #ffb4d1;
+}
+
+/* --- Animasi bergetar halus --- */
+@keyframes bounce {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-6px); }
+}
+
+/* --- Hover: tutup membuka dan kotak berputar 3D --- */
+.gift-container:hover .gift-box {
+    transform: rotateX(20deg) rotateY(15deg) scale(1.05);
+}
+
+.gift-container:hover .gift-lid {
+    transform: rotateX(25deg);
+}
+
+/* --- Teks ajakan --- */
+.gift-text {
+    text-align: center;
+    margin-top: 15px;
+    font-size: 20px;
+    color: #ff3d85;
+    font-weight: bold;
+    animation: glow 1.5s infinite;
+}
+
+@keyframes glow {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+</style>
+
+<div class="gift-container" 
+     onclick="window.location.href='https://frisy-a.github.io/19November/flower.html'">
+    
+    <div class="gift-box">
+        <div class="gift-lid"></div>
+        <div class="ribbon-horizontal"></div>
+        <div class="ribbon-vertical"></div>
+    </div>
+</div>
+
+<div class="gift-text">🎁 Klik untuk membuka hadiah 🎁</div>
+
+ 
     // message.textContent = "SELAMAT";
    // {
    // var a = document.createElement('a');
@@ -189,6 +254,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
