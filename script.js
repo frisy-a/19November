@@ -124,11 +124,11 @@ function extinguishFlame() {
     {
     var a = document.createElement('a');
     var linkText = document.createTextNode("Selamat lilinnya sudah padam! \nBuka Hadiahnya Di Sini");
-      linkText.style.color = "red";
+    a.style.color = "red";
     a.appendChild(linkText);
-      a.title = " Selamat lilinnya sudah padam! \nBuka Hadiahnya Di Sini";
-      a.href = "https://frisy-a.github.io/19November/flower.html";
-      document.body.appendChild(a);
+    a.title = " Selamat lilinnya sudah padam! \nBuka Hadiahnya Di Sini";
+    a.href = "https://frisy-a.github.io/19November/flower.html";
+    document.body.appendChild(a);
     }
       // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
@@ -149,6 +149,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
