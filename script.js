@@ -120,13 +120,13 @@ function extinguishFlame() {
 
     // Tampilkan pesan
     message.classList.remove('hidden');
-    //message.textContent = "Hore! Lilinnya padam! "
+    message.textContent = "Hore! Lilinnya padam! "
     {
     var a = document.createElement('a');
-    var linkText = document.createTextNode("my title text");
+    var linkText = document.createTextNode("Buka Hadiahnya Di Sini");
       a.appendChild(linkText);
-      a.title = "my title text";
-      a.href = "http://example.com";
+      a.title = "Buka Hadiahnya Di Sini";
+      a.href = "https://frisy-a.github.io/19November/flower.html";
       document.body.appendChild(a);
     }
       // Putar lagu ulang tahun
@@ -148,6 +148,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
