@@ -18,7 +18,7 @@ let particleInterval; // Variabel untuk menyimpan interval emisi partikel
 async function initMic() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        micStatus.textContent = "🎤 Microphone aktif. Tiup Lilinya sampai padam sekarang!!!";
+        micStatus.textContent = "🎤 Microphone aktif. Tiup Lilinya sampai padam!!!";
         detectBlow(stream);
     } catch (err) {
         micStatus.textContent = "🚫 Microphone access denied. Please allow microphone access to blow the candle.";
@@ -329,6 +329,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
