@@ -126,8 +126,8 @@ function extinguishFlame() {
     var linkText = document.createTextNode("Selamat lilinnya sudah padam! \nBuka Hadiahnya Di Sini");
     //document.style.color = "red";
     a.appendChild(linkText);
-    a.title = " Selamat lilinnya sudah padam! \nBuka Hadiahnya Di Sini"; // = style="color:white;background-color: orange;">Download</a>;
-    a.href = "https://frisy-a.github.io/19November/flower.html" ; //style="color:white;background-color: orange;">Download</a>
+    a.title = " Selamat lilinnya sudah padam! \nBuka Hadiahnya Di Sini" // = style="color:white;background-color: orange;">Download</a>;
+    a.href = "https://frisy-a.github.io/19November/flower.html"  //style="color:white;background-color: orange;">Download</a>
     document.body.appendChild(a);
     }
       // Putar lagu ulang tahun
@@ -149,6 +149,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
