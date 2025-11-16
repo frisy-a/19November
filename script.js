@@ -121,194 +121,201 @@ function extinguishFlame() {
     // Tampilkan pesan
     message.classList.remove('hidden');
     
-   {
-    // Buat elemen tombol
-    const a = document.createElement('a');
-    a.className = "gift-button";
-    a.href = "https://frisy-a.github.io/19November/flower.html";
-    a.title = "Selamat lilinnya sudah padam! Buka hadiahnya di sini";
-    a.innerHTML = `
-        <span class="gift-emoji">🎁</span>
-        Buka Hadiah
+ // Buat elemen tombol
+const a = document.createElement('a');
+a.className = "gift-button";
+a.href = "https://frisy-a.github.io/19November/flower.html";
+a.title = "Selamat lilinnya sudah padam! Buka hadiahnya di sini";
+a.innerHTML = `
+    <span class="gift-emoji">🎁</span>
+    Buka Hadiah
+`;
+
+// Cegah default click
+a.addEventListener("click", function (e) {
+    e.preventDefault();
+    showCutePopup(a.href);
+});
+
+document.body.appendChild(a);
+
+// --- Popup Lucu + Floating Hearts Wavy + Musik Fade ---
+function showCutePopup(link) {
+    if (document.querySelector('.cute-popup')) return;
+
+    const popup = document.createElement("div");
+    popup.className = "cute-popup";
+
+    popup.innerHTML = `
+        <div class="popup-box">
+            <div class="popup-emoji">✨🎁✨</div>
+            <div class="popup-text">
+                Yeayyy!! Sekali lagi selamat ulang tahun ya Marr.. <br><br>
+                Susah nggak niup Lilinya ☺️☺️☺️
+                Maaf yaa menyusahkanmu 🥹🥹🥹 <br><br>
+                
+                Hmmm.. Semoga kamu selalu baik-baik saja yaa 💗💗💗 <br>
+                I hope you’re always happy.. surrounded by people who cherish you, <br>
+                support you, and love you endlessly just the way you deserve 😇.  <br>
+                May Lord Jesus always be with you, watching over you, <br>
+                guiding your steps, and filling your heart with peace. <br>
+                Jesus bless you😇 <br>
+                <br><br>
+                 
+                Semoga bikin kamu senyum yaa 💞🥰 </div>
+            <button class="popup-btn"> Lanjut yaa 🩷</button>
+        </div>
     `;
 
-    // Cegah default click
-    a.addEventListener("click", function (e) {
-        e.preventDefault();
-        showCutePopup(a.href);
-    });
+    // --- Tambahkan musik dengan fade in ---
+    const audio = new Audio("bahasakalbu.mp3"); // ganti URL
+    audio.loop = true;
+    audio.volume = 0; // mulai dari 0
+    audio.play();
 
-    document.body.appendChild(a);
+    let fadeIn = setInterval(() => {
+        if (audio.volume < 1) {
+            audio.volume = Math.min(audio.volume + 0.02, 1); // naik perlahan
+        } else {
+            clearInterval(fadeIn);
+        }
+    }, 100);
 
-    // --- Popup Lucu + Floating Hearts ---
-    function showCutePopup(link) {
-        const popup = document.createElement("div");
-        popup.className = "cute-popup";
+    popup.appendChild(audio);
+    document.body.appendChild(popup);
 
-        popup.innerHTML = `
-            <div class="popup-box">
-                <div class="popup-emoji">✨🎁✨</div>
-                <div class="popup-text">
-                    Yeayyy!! Sekali lagi selamat ulang tahun ya Marr.. <br><br>
-                    Susah nggak niup Lilinya ☺️☺️☺️
-                    Maaf yaa menyusahkanmu 🥹🥹🥹 <br><br>
-                    
-                    Hmmm.. Semoga kamu selalu baik-baik saja yaa 💗💗💗 <br>
-                    I hope you’re always happy.. surrounded by people who cherish you, <br>
-                    support you, and love you endlessly just the way you deserve 😇.  <br>
-                    May Lord Jesus always be with you, watching over you, <br>
-                    guiding your steps, and filling your heart with peace. <br>
-                    Jesus bless you😇 <br>
-                    <br><br>
-                     
-                    Semoga bikin kamu senyum yaa 💞🥰 </div>
-                <button class="popup-btn"> Lanjut yaa 🩷</button>
-            </div>
-        `;
+    // Jalankan animasi hati melayang wavy
+    startFloatingHeartsWavy(popup);
 
-        document.body.appendChild(popup);
-
-        // Jalankan animasi hati melayang
-        startFloatingHearts(popup);
-
-        // Tombol OK
-        popup.querySelector(".popup-btn").onclick = () => {
-            popup.remove();
-            window.location.href = link;
-        };
-    }
-
-    // --- Membuat hati melayang ---
-    function startFloatingHearts(container) {
-        const interval = setInterval(() => {
-            // Kalau popup sudah hilang, hentikan animasi
-            if (!document.body.contains(container)) {
-                clearInterval(interval);
-                return;
+    // Tombol OK
+    popup.querySelector(".popup-btn").onclick = () => {
+        // Fade out musik
+        let fadeOut = setInterval(() => {
+            if (audio.volume > 0) {
+                audio.volume = Math.max(audio.volume - 0.02, 0);
+            } else {
+                clearInterval(fadeOut);
+                audio.pause();
             }
+        }, 100);
 
-            const heart = document.createElement("div");
-            heart.className = "floating-heart";
-            heart.textContent = "💗";
-
-            // Posisi acak secara horizontal
-            heart.style.left = Math.random() * 80 + 10 + "%";
-
-            // Ukuran acak (biar lebih hidup)
-            const size = Math.random() * 20 + 20;
-            heart.style.fontSize = size + "px";
-
-            container.appendChild(heart);
-
-            // Hapus setelah animasi selesai
-            setTimeout(() => heart.remove(), 3000);
-        }, 300); // setiap 0.3 detik bikin 1 hati
-    }
-
-    // Tambahkan style ke dokumen
-    const style = document.createElement("style");
-    style.innerHTML = `
-        .gift-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: #ff6699;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: bold;
-            text-decoration: none;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 0, 100, 0.3);
-            transition: 0.3s;
-            gap: 10px;
-        }
-        .gift-button:hover {
-            background: #ff3d85;
-            transform: scale(1.07);
-            box-shadow: 0 8px 20px rgba(255, 0, 130, 0.4);
-        }
-        .gift-emoji {
-            font-size: 24px;
-        }
-
-        /* --- Popup Lucu --- */
-        .cute-popup {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(255, 150, 180, 0.4);
-            backdrop-filter: blur(3px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s ease;
-            z-index: 9999;
-            overflow: hidden;
-        }
-        .popup-box {
-            background: #fff0f6;
-            padding: 25px;
-            border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(255, 0, 150, 0.3);
-            animation: popIn 0.35s ease;
-            max-width: 300px;
-            position: relative;
-            z-index: 10;
-        }
-        .popup-emoji {
-            font-size: 36px;
-            margin-bottom: 10px;
-        }
-        .popup-text {
-            font-size: 16px;
-            color: #ff4f9a;
-            margin-bottom: 15px;
-            line-height: 1.4;
-        }
-        .popup-btn {
-            background: #ff72b6;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 10px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.25s;
-        }
-        .popup-btn:hover {
-            background: #ff4a9f;
-            transform: scale(1.07);
-        }
-
-        /* --- Floating Hearts --- */
-        .floating-heart {
-            position: absolute;
-            bottom: 20px;
-            animation: rise 3s linear forwards;
-            opacity: 0.9;
-        }
-
-        @keyframes rise {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-250px) scale(1.8); opacity: 0; }
-        }
-
-        /* Animasi popup */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        @keyframes popIn {
-            from { transform: scale(0.6); opacity: 0; }
-            to { transform: scale(1); opacity: 1; }
-        }
-    `;
-    document.head.appendChild(style);
+        popup.remove();
+        window.location.href = link;
+    };
 }
+
+// --- Floating Hearts Wavy ---
+function startFloatingHeartsWavy(container) {
+    const interval = setInterval(() => {
+        if (!document.body.contains(container)) {
+            clearInterval(interval);
+            return;
+        }
+
+        const heart = document.createElement("div");
+        heart.className = "floating-heart";
+        heart.textContent = "💗";
+
+        const leftStart = Math.random() * 80 + 10;
+        heart.style.left = leftStart + "%";
+        const size = Math.random() * 20 + 20;
+        heart.style.fontSize = size + "px";
+
+        // Random wave properties
+        const amplitude = Math.random() * 20 + 10; // gerakan horizontal
+        const frequency = Math.random() * 0.05 + 0.02;
+
+        let startTime = null;
+        function animate(time) {
+            if (!startTime) startTime = time;
+            const elapsed = time - startTime;
+            const progress = elapsed / 3000; // 3 detik
+            heart.style.bottom = progress * 250 + "px";
+            heart.style.left = leftStart + amplitude * Math.sin(progress * 2 * Math.PI / frequency) + "%";
+            heart.style.opacity = 1 - progress;
+            heart.style.transform = `scale(${1 + progress})`;
+
+            if (progress < 1) {
+                requestAnimationFrame(animate);
+            } else {
+                heart.remove();
+            }
+        }
+
+        container.appendChild(heart);
+        requestAnimationFrame(animate);
+
+    }, 300);
+}
+
+// --- Tambahkan style ---
+const style = document.createElement("style");
+style.innerHTML = `
+    .gift-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background: #ff6699;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 12px;
+        font-size: 18px;
+        font-weight: bold;
+        text-decoration: none;
+        cursor: pointer;
+        box-shadow: 0 5px 15px rgba(255, 0, 100, 0.3);
+        transition: 0.3s;
+        gap: 10px;
+    }
+    .gift-button:hover {
+        background: #ff3d85;
+        transform: scale(1.07);
+        box-shadow: 0 8px 20px rgba(255, 0, 130, 0.4);
+    }
+    .gift-emoji { font-size: 24px; }
+    .cute-popup {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: rgba(255, 150, 180, 0.4);
+        backdrop-filter: blur(3px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        animation: fadeIn 0.3s ease;
+        z-index: 9999;
+        overflow: hidden;
+    }
+    .popup-box {
+        background: #fff0f6;
+        padding: 25px;
+        border-radius: 20px;
+        text-align: center;
+        box-shadow: 0 8px 20px rgba(255, 0, 150, 0.3);
+        animation: popIn 0.35s ease;
+        max-width: 300px;
+        position: relative;
+        z-index: 10;
+    }
+    .popup-emoji { font-size: 36px; margin-bottom: 10px; }
+    .popup-text {
+        font-size: 16px; color: #ff4f9a; margin-bottom: 15px; line-height: 1.4;
+    }
+    .popup-btn {
+        background: #ff72b6;
+        color: white; border: none; padding: 10px 20px; border-radius: 10px;
+        font-size: 16px; cursor: pointer; font-weight: bold; transition: 0.25s;
+    }
+    .popup-btn:hover {
+        background: #ff4a9f;
+        transform: scale(1.07);
+    }
+    .floating-heart { position: absolute; bottom: 20px; opacity: 0.9; }
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+    @keyframes popIn { from {transform: scale(0.6); opacity:0;} to {transform: scale(1); opacity:1;} }
+`;
+document.head.appendChild(style);
+
 
       // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
@@ -329,6 +336,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
