@@ -10,6 +10,11 @@ const fireParticlesContainer = document.getElementById('fireParticles');
 const smokePuffElement = document.getElementById('smokePuff');
 const giftButtonContainer = document.getElementById('giftButtonContainer');
 
+// Popup elements
+const popup = document.getElementById("popupMessage");
+const popupText = document.getElementById("popupText");
+const popupNext = document.getElementById("popupNext");
+
 let audioContext;
 let analyser;
 let micSource;
@@ -20,6 +25,16 @@ const BLOW_THRESHOLD_VOLUME = 90;
 const SUSTAINED_BLOW_DURATION = 700;
 const PARTICLE_EMIT_INTERVAL = 55;
 let particleInterval;
+
+// Popup message list
+const popupParagraphs = [
+    "Halo! Terima kasih sudah meniup lilin ini 💖",
+    "Semoga semua harapan kamu tercapai dan hari ini penuh kebahagiaan 🎂✨",
+    "Ada sesuatu yang spesial aku siapin buat kamu...",
+    "Klik tombol di bawah ini untuk membuka hadiahnya 🎁"
+];
+
+let currentPopupIndex = 0;
 
 // ============================
 //   INIT MIC
@@ -138,16 +153,12 @@ function extinguishFlame() {
     message.classList.remove('hidden');
     message.textContent = "Hore! Lilinnya padam! 🎉";
 
-    // Putar musik
-    const birthdaySong = document.getElementById('birthdaySong');
-    birthdaySong.play().catch(err => console.warn("Autoplay blocked:", err));
-
-    // Tampilkan asap
+    // Asap
     smokePuffElement.style.opacity = 1;
     smokePuffElement.style.animation = 'smoke-rise 1s forwards ease-out';
 
-    // Tampilkan tombol hadiah
-    showGiftButton();
+    // Buka popup
+    setTimeout(() => openPopup(), 800);
 
     // Tutup mic
     micSource?.disconnect();
@@ -156,23 +167,31 @@ function extinguishFlame() {
 }
 
 // ============================
-//   SHOW GIFT BUTTON
+//   POPUP LOGIC
 // ============================
 
-function showGiftButton() {
-    const btn = document.createElement('a');
-    btn.className = "gift-button";
-    btn.href = "https://frisy-a.github.io/19November/flower.html";
-    btn.innerHTML = "🎁 Buka Hadiah";
+function openPopup() {
+    popup.style.display = "flex";
+    popupText.textContent = popupParagraphs[0];
 
-    btn.style.opacity = "0";
-    btn.style.transition = "opacity 0.8s ease";
-
-    giftButtonContainer.appendChild(btn);
-
-    setTimeout(() => {
-        btn.style.opacity = "1";
-    }, 100);
+    // Putar musik popup
+    const popupMusic = document.getElementById("popupMusic");
+    popupMusic.play().catch(e => console.log("Autoplay blocked"));
 }
+
+popupNext.addEventListener("click", () => {
+    currentPopupIndex++;
+
+    if (currentPopupIndex < popupParagraphs.length - 1) {
+        popupText.textContent = popupParagraphs[currentPopupIndex];
+    } 
+    else if (currentPopupIndex === popupParagraphs.length - 1) {
+        popupText.textContent = popupParagraphs[currentPopupIndex];
+        popupNext.textContent = "🎁 Buka Hadiah";
+    }
+    else {
+        window.location.href = "https://frisy-a.github.io/19November/flower.html";
+    }
+});
 
 window.onload = initMic;
