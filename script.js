@@ -336,3 +336,4 @@ document.head.appendChild(style);
 
 
 window.onload = initMic;
+
