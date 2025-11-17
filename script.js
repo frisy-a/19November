@@ -121,6 +121,14 @@ function extinguishFlame() {
     // Tampilkan pesan
     message.classList.remove('hidden');
     message.textContent = "Hore! Lilinnya padam! ";
+    
+    const a = document.createElement('a');
+    a.className = "gift-button";
+    a.href = "https://frisy-a.github.io/19November/flower.html";
+    a.title = "Selamat lilinnya sudah padam! Buka hadiahnya di sini";
+    a.innerHTML = `
+    <span class="gift-emoji">🎁</span>
+    Buka Hadiah`;
 
     // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
@@ -140,3 +148,4 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
