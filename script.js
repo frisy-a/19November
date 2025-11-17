@@ -120,7 +120,7 @@ function extinguishFlame() {
 
     // Tampilkan pesan
     message.classList.remove('hidden');
-    
+    { 
 const a = document.createElement('a');
 a.className = "gift-button";
 a.href = "https://frisy-a.github.io/19November/flower.html";
@@ -215,7 +215,7 @@ function showCutePopup(link) {
     });
 }
 
-
+    }
       // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
     birthdaySong.play().catch((error) => {
@@ -235,6 +235,7 @@ function showCutePopup(link) {
 
 
 window.onload = initMic;
+
 
 
 
