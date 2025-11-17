@@ -120,7 +120,7 @@ function extinguishFlame() {
 
     // Tampilkan pesan
     message.classList.remove('hidden');
-    { 
+    // Buat elemen tombol
 const a = document.createElement('a');
 a.className = "gift-button";
 a.href = "https://frisy-a.github.io/19November/flower.html";
@@ -130,6 +130,7 @@ a.innerHTML = `
     Buka Hadiah
 `;
 
+// Cegah default click
 a.addEventListener("click", function (e) {
     e.preventDefault();
     showCutePopup(a.href);
@@ -137,83 +138,33 @@ a.addEventListener("click", function (e) {
 
 document.body.appendChild(a);
 
-// ==========================
-// MUSIC FADE-IN
-// ==========================
-const bgm = new Audio("popup.mp3"); // Ganti dengan file musikmu
-bgm.volume = 0;
-bgm.loop = true;
-
-function fadeInMusic() {
-    let v = 0;
-    const fade = setInterval(() => {
-        if (v >= 1) {
-            clearInterval(fade);
-        } else {
-            v += 0.02;
-            bgm.volume = v;
-        }
-    }, 120);
-    bgm.play().catch(()=>{});
-}
-
-// ==========================
-// POPUP PARAGRAF BERTAHAP
-// ==========================
+// --- Popup Lucu + Floating Hearts Wavy + Musik Fade ---
 function showCutePopup(link) {
     if (document.querySelector('.cute-popup')) return;
-
-    fadeInMusic();
 
     const popup = document.createElement("div");
     popup.className = "cute-popup";
 
-    const paragraphs = [
-        `Yeayyy!! Sekali lagi selamat ulang tahun ya Marr.. 🥰<br><br>
-        Susah nggak niup lilinya? ☺️☺️☺️<br>
-        Maaf yaa kalo menyusahkanmu 🥹🥹🥹`,
-
-        `Hmmm.. Semoga kamu selalu baik-baik saja yaa 💗💗💗<br>
-        I hope you’re always happy… surrounded by people who cherish you,<br>
-        support you, and love you endlessly just the way you deserve 😇.`,
-
-        `May Lord Jesus always be with you, watching over you,<br>
-        guiding your steps, and filling your heart with peace.<br>
-        Jesus bless you 😇`,
-
-        `Semoga tulisan kecil ini bikin kamu senyum yaa 💞🥰`
-    ];
-
-    let index = 0;
-
     popup.innerHTML = `
         <div class="popup-box">
             <div class="popup-emoji">✨🎁✨</div>
-            <div class="popup-text" id="popupText"></div>
-            <button class="popup-btn" id="nextBtn">Lanjut 🩷</button>
+            <div class="popup-text">
+                Yeayyy!! Sekali lagi selamat ulang tahun ya Marr.. <br><br>
+                Susah nggak niup Lilinya ☺️☺️☺️
+                Maaf yaa menyusahkanmu 🥹🥹🥹 <br><br>
+                
+                Hmmm.. Semoga kamu selalu baik-baik saja yaa 💗💗💗 <br>
+                I hope you’re always happy.. surrounded by people who cherish you, <br>
+                support you, and love you endlessly just the way you deserve 😇.  <br>
+                May Lord Jesus always be with you, watching over you, <br>
+                guiding your steps, and filling your heart with peace. <br>
+                Jesus bless you😇 <br>
+                <br><br>
+                 
+                Semoga bikin kamu senyum yaa 💞🥰 </div>
+            <button class="popup-btn"> Lanjut yaa 🩷</button>
         </div>
     `;
-
-    document.body.appendChild(popup);
-
-    const textBox = document.getElementById("popupText");
-    const nextBtn = document.getElementById("nextBtn");
-
-    function showParagraph(i) {
-        textBox.innerHTML = paragraphs[i];
-    }
-
-    showParagraph(index);
-
-    nextBtn.addEventListener("click", function () {
-        index++;
-        if (index < paragraphs.length) {
-            showParagraph(index);
-        } else {
-            window.location.href = link; // Ke hadiah
-        }
-    });
-}
 
     }
       // Putar lagu ulang tahun
@@ -235,6 +186,7 @@ function showCutePopup(link) {
 
 
 window.onload = initMic;
+
 
 
 
