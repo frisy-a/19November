@@ -121,142 +121,9 @@ function extinguishFlame() {
     // Tampilkan pesan
     message.classList.remove('hidden');
     
- // Buat elemen tombol
-// ====== INJECT CSS ======
-(function() {
-    const css = `
-    .cute-popup {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.45);
-        backdrop-filter: blur(4px);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 99999;
-        animation: popupFadeIn 0.4s ease-out;
-    }
-
-    @keyframes popupFadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
-    }
-
-    .popup-box {
-        background: #ffffff;
-        padding: 25px 30px;
-        width: 330px;
-        max-width: 90%;
-        border-radius: 20px;
-        text-align: center;
-        position: relative;
-        box-shadow: 0 0 18px rgba(255, 125, 170, 0.4);
-        animation: popScale 0.4s ease;
-    }
-
-    @keyframes popScale {
-        0% { transform: scale(0.6); opacity: 0; }
-        100% { transform: scale(1); opacity: 1; }
-    }
-
-    .popup-emoji {
-        font-size: 30px;
-        margin-bottom: 10px;
-    }
-
-    .popup-text {
-        font-size: 15px;
-        color: #555;
-        margin-bottom: 20px;
-        line-height: 1.5;
-        animation: fadeParagraph 0.5s ease;
-    }
-
-    @keyframes fadeParagraph {
-        from { opacity: 0; transform: translateY(5px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-
-    .popup-next-btn,
-    .popup-final-btn {
-        background: #ff7fbf;
-        border: none;
-        padding: 10px 18px;
-        border-radius: 12px;
-        font-size: 15px;
-        color: white;
-        cursor: pointer;
-        transition: 0.2s;
-        box-shadow: 0 3px 10px rgba(255, 120, 170, 0.4);
-    }
-
-    .popup-next-btn:hover,
-    .popup-final-btn:hover {
-        background: #ff5fae;
-        transform: scale(1.05);
-    }
-
-    .cute-popup::before,
-    .cute-popup::after {
-        content: "💗";
-        position: absolute;
-        font-size: 22px;
-        animation: floatHearts 4s infinite linear;
-        opacity: 0.8;
-    }
-
-    .cute-popup::before {
-        left: 25%;
-        animation-delay: 0s;
-    }
-    .cute-popup::after {
-        right: 25%;
-        animation-delay: 2s;
-    }
-
-    @keyframes floatHearts {
-        0% { transform: translateY(20px); opacity: 0; }
-        20% { opacity: 1; }
-        100% { transform: translateY(-220px); opacity: 0; }
-    }
-
-    .gift-button {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        background: #ff89c7;
-        color: white;
-        padding: 12px 20px;
-        text-decoration: none;
-        font-size: 15px;
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        box-shadow: 0 4px 12px rgba(255, 120, 170, 0.4);
-        transition: 0.2s;
-    }
-
-    .gift-button:hover {
-        background: #ff6bb8;
-        transform: scale(1.07);
-    }
-
-    .gift-emoji {
-        font-size: 18px;
-    }
-    `;
-
-    const style = document.createElement("style");
-    style.innerHTML = css;
-    document.head.appendChild(style);
-})();
-
-
-// ====== GIFT BUTTON ======
+// ==========================
+// TOMBOL HADIAH
+// ==========================
 const a = document.createElement('a');
 a.className = "gift-button";
 a.href = "https://frisy-a.github.io/19November/flower.html";
@@ -273,59 +140,81 @@ a.addEventListener("click", function (e) {
 
 document.body.appendChild(a);
 
+// ==========================
+// MUSIC FADE-IN
+// ==========================
+const bgm = new Audio("popup.mp3"); // Ganti dengan file musikmu
+bgm.volume = 0;
+bgm.loop = true;
 
-// ===== POPUP FUNCTION =====
+function fadeInMusic() {
+    let v = 0;
+    const fade = setInterval(() => {
+        if (v >= 1) {
+            clearInterval(fade);
+        } else {
+            v += 0.02;
+            bgm.volume = v;
+        }
+    }, 120);
+    bgm.play().catch(()=>{});
+}
+
+// ==========================
+// POPUP PARAGRAF BERTAHAP
+// ==========================
 function showCutePopup(link) {
     if (document.querySelector('.cute-popup')) return;
+
+    fadeInMusic();
 
     const popup = document.createElement("div");
     popup.className = "cute-popup";
 
+    const paragraphs = [
+        `Yeayyy!! Sekali lagi selamat ulang tahun ya Marr.. 🥰<br><br>
+        Susah nggak niup lilinya? ☺️☺️☺️<br>
+        Maaf yaa kalo menyusahkanmu 🥹🥹🥹`,
+
+        `Hmmm.. Semoga kamu selalu baik-baik saja yaa 💗💗💗<br>
+        I hope you’re always happy… surrounded by people who cherish you,<br>
+        support you, and love you endlessly just the way you deserve 😇.`,
+
+        `May Lord Jesus always be with you, watching over you,<br>
+        guiding your steps, and filling your heart with peace.<br>
+        Jesus bless you 😇`,
+
+        `Semoga tulisan kecil ini bikin kamu senyum yaa 💞🥰`
+    ];
+
+    let index = 0;
+
     popup.innerHTML = `
         <div class="popup-box">
             <div class="popup-emoji">✨🎁✨</div>
-            <div class="popup-text"></div>
-            <button class="popup-next-btn">Lanjut 🩷</button>
-            <button class="popup-final-btn" style="display:none;">Buka Hadiah 🎁</button>
+            <div class="popup-text" id="popupText"></div>
+            <button class="popup-btn" id="nextBtn">Lanjut 🩷</button>
         </div>
     `;
 
     document.body.appendChild(popup);
 
-    const textContainer = popup.querySelector(".popup-text");
-    const nextBtn = popup.querySelector(".popup-next-btn");
-    const finalBtn = popup.querySelector(".popup-final-btn");
+    const textBox = document.getElementById("popupText");
+    const nextBtn = document.getElementById("nextBtn");
 
-    const paragraphs = [
-        "Yeayyy!! Sekali lagi selamat ulang tahun ya Marr..",
-        "Susah nggak niup Lilinya? ☺️☺️☺️",
-        "Maaf yaa menyusahkanmu 🥹🥹🥹",
-        "Hmmm.. Semoga kamu selalu baik-baik saja yaa 💗💗💗",
-        "I hope you’re always happy.. surrounded by people who cherish you, support you, and love you endlessly just the way you deserve 😇.",
-        "May Lord Jesus always be with you, watching over you, guiding your steps, and filling your heart with peace. Jesus bless you 😇",
-        "Semoga bikin kamu senyum yaa 💞🥰"
-    ];
+    function showParagraph(i) {
+        textBox.innerHTML = paragraphs[i];
+    }
 
-    let index = 0;
-
-    textContainer.innerHTML = paragraphs[index];
+    showParagraph(index);
 
     nextBtn.addEventListener("click", function () {
         index++;
-
         if (index < paragraphs.length) {
-            textContainer.style.animation = "none";
-            void textContainer.offsetWidth;
-            textContainer.style.animation = "";
-            textContainer.innerHTML = paragraphs[index];
+            showParagraph(index);
         } else {
-            nextBtn.style.display = "none";
-            finalBtn.style.display = "block";
+            window.location.href = link; // Ke hadiah
         }
-    });
-
-    finalBtn.addEventListener("click", function () {
-        window.location.href = link;
     });
 }
 
@@ -349,6 +238,7 @@ function showCutePopup(link) {
 
 
 window.onload = initMic;
+
 
 
 
