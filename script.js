@@ -18,7 +18,7 @@ let particleInterval; // Variabel untuk menyimpan interval emisi partikel
 async function initMic() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        micStatus.textContent = "🎤 Microphone aktif. Tiup Lilinya sampai padam!!!";
+        micStatus.textContent = "🎤 Microphone is active. Blow to extinguish!";
         detectBlow(stream);
     } catch (err) {
         micStatus.textContent = "🚫 Microphone access denied. Please allow microphone access to blow the candle.";
@@ -120,93 +120,13 @@ function extinguishFlame() {
 
     // Tampilkan pesan
     message.classList.remove('hidden');
-    // Buat elemen tombol
-    {
-    // --- Buat tombol hadiah ---
-    const a = document.createElement('a');
-    a.className = "gift-button";
-    a.href = "https://frisy-a.github.io/19November/flower.html";
-    a.title = "Selamat lilinnya sudah padam! Buka hadiahnya di sini";
-    a.innerHTML = `
-        <span class="gift-emoji">🎁</span>
-        Buka Hadiah
-    `;
+    message.textContent = "Hore! Lilinnya padam! ";
 
-    // Cegah link langsung pindah
-    a.addEventListener("click", function (e) {
-        e.preventDefault();
-        showCutePopup(a.href);
+    // Putar lagu ulang tahun
+    const birthdaySong = document.getElementById('birthdaySong');
+    birthdaySong.play().catch((error) => {
+        console.warn("Autoplay prevented:", error);
     });
-
-    document.body.appendChild(a);
-
-    // --- POPUP + MUSIK ---
-    function showCutePopup(link) {
-
-        // Cegah popup dobel
-        if (document.querySelector('.cute-popup')) return;
-
-        const popup = document.createElement("div");
-        popup.className = "cute-popup";
-
-        popup.innerHTML = `
-            <div class="popup-box">
-                <div class="popup-emoji">✨🎁✨</div>
-
-                <div class="popup-text" id="popupText">
-                    Yeayyy!! Sekali lagi selamat ulang tahun ya Marr.. <br><br>
-                    Susah nggak niup Lilinya ☺️☺️☺️
-                    Maaf yaa menyusahkanmu 🥹🥹🥹 <br><br>
-
-                    Hmmm.. Semoga kamu selalu baik-baik saja yaa 💗💗💗 <br>
-                    I hope you’re always happy.. surrounded by people who cherish you, <br>
-                    support you, and love you endlessly just the way you deserve 😇.  <br>
-                    May Lord Jesus always be with you, watching over you, <br>
-                    guiding your steps, and filling your heart with peace. <br>
-                    Jesus bless you😇 <br><br>
-
-                    Semoga bikin kamu senyum yaa 💞🥰 
-                </div>
-
-                <button class="popup-btn" id="nextBtn">Lanjut yaa 🩷</button>
-            </div>
-        `;
-
-        document.body.appendChild(popup);
-
-        // --- MUSIK ULANG TAHUN FADE-IN ---
-        const birthdaySong = document.getElementById('birthdaySong');
-
-        if (birthdaySong) {
-            birthdaySong.volume = 0;
-
-            birthdaySong.play().catch(error => {
-                console.warn("Autoplay prevented:", error);
-            });
-
-            let volume = 0;
-            const fadeInterval = setInterval(() => {
-                if (volume < 1) {
-                    volume += 0.05;
-                    birthdaySong.volume = volume;
-                } else {
-                    clearInterval(fadeInterval);
-                }
-            }, 120);
-        }
-
-        // --- Tombol Lanjut ---
-        document.getElementById("nextBtn").addEventListener("click", () => {
-            window.location.href = link;
-        });
-    }
-
-} // Akhir block
-
-
-    
-
-  
 
     // Animasi asap
     smokePuffElement.style.opacity = 1;
@@ -219,62 +139,4 @@ function extinguishFlame() {
 }
 
 
-
 window.onload = initMic;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
