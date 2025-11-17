@@ -122,7 +122,7 @@ function extinguishFlame() {
     message.classList.remove('hidden');
     //message.textContent = "Hore! Lilinnya padam! ";
  // Buat elemen tombol
-
+    {
 const a = document.createElement('a');
 a.className = "gift-button";
 a.href = "https://frisy-a.github.io/19November/flower.html";
@@ -167,7 +167,7 @@ function showCutePopup(link) {
             <button class="popup-btn"> Lanjut yaa 🩷</button>
         </div>
     `;
-
+}
 
     
     // Putar lagu ulang tahun
@@ -188,6 +188,7 @@ function showCutePopup(link) {
 
 
 window.onload = initMic;
+
 
 
 
