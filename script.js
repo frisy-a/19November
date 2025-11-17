@@ -54,4 +54,122 @@ function createFireParticle() {
 
 function emitParticles() {
     clearInterval(particleInterval);
-    particleInterval = setInt
+    particleInterval = setInterval(createFireParticle, PARTICLE_EMIT_INTERVAL);
+}
+
+function stopEmittingParticles() {
+    clearInterval(particleInterval);
+}
+
+function detectBlow(stream) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    micSource = audioContext.createMediaStreamSource(stream);
+
+    analyser = audioContext.createAnalyser();
+    analyser.fftSize = 256;
+    analyser.smoothingTimeConstant = 0.7;
+
+    micSource.connect(analyser);
+
+    const data = new Uint8Array(analyser.frequencyBinCount);
+
+    function analyze() {
+        if (isExtinguished) return;
+
+        analyser.getByteFrequencyData(data);
+        const volume = data.reduce((a, b) => a + b, 0) / data.length;
+
+        if (volume > BLOW_THRESHOLD_VOLUME) {
+            if (!flame.classList.contains('blowing')) {
+                flame.classList.add('blowing');
+                emitParticles();
+                blowDetectedTimer = setTimeout(extinguishFlame, SUSTAINED_BLOW_DURATION);
+            }
+        } else {
+            flame.classList.remove('blowing');
+            stopEmittingParticles();
+            clearTimeout(blowDetectedTimer);
+        }
+
+        requestAnimationFrame(analyze);
+    }
+
+    analyze();
+}
+
+// ========================================================
+// ===================== EXTINGUISH =======================
+// ========================================================
+
+function extinguishFlame() {
+    if (isExtinguished) return;
+    isExtinguished = true;
+
+    flame.classList.remove('blowing');
+    flame.classList.add('extinguished');
+
+    stopEmittingParticles();
+
+    const birthdaySong = document.getElementById('birthdaySong');
+    birthdaySong.play().catch(() => {});
+
+    smokePuffElement.style.opacity = 1;
+    smokePuffElement.style.animation = 'smoke-rise 1s forwards ease-out';
+
+    if (micSource) micSource.disconnect();
+    if (analyser) analyser.disconnect();
+    if (audioContext && audioContext.state !== "closed") audioContext.close();
+
+    // Buka POPUP
+    openPopup();
+}
+
+window.onload = initMic;
+
+
+// ========================================================
+// =================== POPUP SYSTEM =======================
+// ========================================================
+
+// Konten paragraf yang ingin ditampilkan
+const popupTexts = [
+    "Selamat ulang tahun! 🥳",
+    "Semoga hari ini membawa banyak kebahagiaan untukmu.",
+    "Terima kasih sudah menjadi pribadi yang hebat dan baik.",
+    "Sekarang waktunya buka hadiah 🎁"
+];
+
+let currentParagraph = 0;
+
+const popup = document.getElementById('popupBox');
+const popupText = document.getElementById('popupText');
+const nextBtn = document.getElementById('nextParagraph');
+const giftBtn = document.getElementById('giftButton');
+
+// Tampilkan popup & paragraf pertama
+function openPopup() {
+    popup.classList.remove('hidden');
+    currentParagraph = 0;
+    popupText.textContent = popupTexts[currentParagraph];
+    nextBtn.style.display = "block";
+    giftBtn.style.display = "none";
+}
+
+// Klik tombol Next paragraf
+nextBtn.addEventListener('click', () => {
+    currentParagraph++;
+
+    if (currentParagraph < popupTexts.length - 1) {
+        popupText.textContent = popupTexts[currentParagraph];
+    } 
+    else {
+        popupText.textContent = popupTexts[currentParagraph];
+        nextBtn.style.display = "none";
+        giftBtn.style.display = "flex"; // Tampilkan tombol hadiah
+    }
+});
+
+// Tombol hadiah → link kamu
+giftBtn.addEventListener('click', () => {
+    window.location.href = "https://frisy-a.github.io/19November/flower.html";
+});
