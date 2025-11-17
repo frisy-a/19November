@@ -350,7 +350,7 @@ body {
   .mic-status {
     font-size: 0.85rem;
   }
-}
+
 .gift-button {
     display: inline-block;
     background: #ff4d6d;
@@ -368,6 +368,7 @@ body {
     transform: scale(1.08);
     background: #ff335a;
 }
-
+}
 /* ===== Large Devices (Desktop) stays default ===== */
+
 
