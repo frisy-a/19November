@@ -1,58 +1,71 @@
+// ============================
+//   VARIABLE SETUP
+// ============================
+
 let blowCount = 0;
 const flame = document.getElementById('flame');
 const message = document.getElementById('wishMessage');
 const micStatus = document.getElementById('micStatus');
 const fireParticlesContainer = document.getElementById('fireParticles');
-const smokePuffElement = document.getElementById('smokePuff'); // Dapatkan elemen asap
+const smokePuffElement = document.getElementById('smokePuff');
+const giftButtonContainer = document.getElementById('giftButtonContainer');
 
 let audioContext;
 let analyser;
 let micSource;
 let isExtinguished = false;
-let blowDetectedTimer; // Untuk melacak durasi tiupan
-const BLOW_THRESHOLD_VOLUME = 90; // Volume minimum untuk dianggap tiupan
-const SUSTAINED_BLOW_DURATION = 700; // Durasi tiupan (ms) agar api padam
-const PARTICLE_EMIT_INTERVAL = 55; // Interval emisi partikel saat ditiup (ms)
-let particleInterval; // Variabel untuk menyimpan interval emisi partikel
+let blowDetectedTimer;
+
+const BLOW_THRESHOLD_VOLUME = 90;
+const SUSTAINED_BLOW_DURATION = 700;
+const PARTICLE_EMIT_INTERVAL = 55;
+let particleInterval;
+
+// ============================
+//   INIT MIC
+// ============================
 
 async function initMic() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        micStatus.textContent = "🎤 Microphone is active. Blow to extinguish!";
+
+        micStatus.textContent = "🎤 Microphone aktif. Tiup untuk memadamkan!";
         detectBlow(stream);
+
     } catch (err) {
-        micStatus.textContent = "🚫 Microphone access denied. Please allow microphone access to blow the candle.";
-        console.error("Error accessing microphone:", err);
+        micStatus.textContent = "🚫 Mic ditolak. Tidak bisa mendeteksi tiupan.";
+        console.error("Mic Error:", err);
     }
 }
+
+// ============================
+//   FIRE PARTICLES
+// ============================
 
 function createFireParticle() {
     const particle = document.createElement('div');
     particle.classList.add('fire-particle');
-    // Posisi awal partikel di sekitar dasar api
-    const startX = Math.random() * 10 - 5; // -5 to 5
-    const startY = Math.random() * 5; // 0 to 5
-    particle.style.left = `${50 + startX / 15 * 100}%`; // Konversi ke % relatif
+
+    const startX = Math.random() * 10 - 5;
+    const startY = Math.random() * 5;
+
+    particle.style.left = `${50 + (startX / 15) * 100}%`;
     particle.style.top = `${-15 + startY}px`;
     particle.style.width = `${Math.random() * 5 + 3}px`;
     particle.style.height = `${Math.random() * 8 + 5}px`;
 
-    // Arah "terbang" partikel saat ditiup
-    const dx = (Math.random() - 0.5) * 60; // -30 to 30px horizontal displacement
-    const dy = - (Math.random() * 40 + 30); // -30 to -70px vertical displacement
+    const dx = (Math.random() - 0.5) * 60;
+    const dy = -(Math.random() * 40 + 30);
+
     particle.style.setProperty('--dx', `${dx}px`);
     particle.style.setProperty('--dy', `${dy}px`);
 
     fireParticlesContainer.appendChild(particle);
 
-    // Hapus partikel setelah animasinya selesai
-    particle.addEventListener('animationend', () => {
-        particle.remove();
-    });
+    particle.addEventListener('animationend', () => particle.remove());
 }
 
 function emitParticles() {
-    // Stop any existing interval before starting a new one
     clearInterval(particleInterval);
     particleInterval = setInterval(createFireParticle, PARTICLE_EMIT_INTERVAL);
 }
@@ -61,12 +74,17 @@ function stopEmittingParticles() {
     clearInterval(particleInterval);
 }
 
+// ============================
+//   DETECT BLOW
+// ============================
+
 function detectBlow(stream) {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
     micSource = audioContext.createMediaStreamSource(stream);
     analyser = audioContext.createAnalyser();
-    analyser.fftSize = 256; // Ukuran FFT yang lebih kecil untuk respons lebih cepat
-    analyser.smoothingTimeConstant = 0.7; // Agak lebih responsif
+
+    analyser.fftSize = 256;
+    analyser.smoothingTimeConstant = 0.7;
 
     micSource.connect(analyser);
 
@@ -74,32 +92,27 @@ function detectBlow(stream) {
 
     function analyze() {
         if (isExtinguished) {
-            // Pastikan untuk memutuskan semua koneksi audio jika lilin padam
-            if (micSource) micSource.disconnect();
-            if (analyser) analyser.disconnect();
-            if (audioContext) audioContext.close();
+            micSource?.disconnect();
+            analyser?.disconnect();
+            audioContext?.close();
             return;
         }
 
         analyser.getByteFrequencyData(dataArray);
-        const volume = dataArray.reduce((acc, val) => acc + val, 0) / dataArray.length;
+        const volume = dataArray.reduce((a, v) => a + v, 0) / dataArray.length;
 
         if (volume > BLOW_THRESHOLD_VOLUME) {
-            // Tiupan terdeteksi
             if (!flame.classList.contains('blowing')) {
-                flame.classList.add('blowing'); // Aktifkan animasi "tertiup"
-                emitParticles(); // Mulai memancarkan partikel
-                // Mulai timer untuk memadamkan api jika tiupan berlanjut
-                blowDetectedTimer = setTimeout(() => {
-                    extinguishFlame();
-                }, SUSTAINED_BLOW_DURATION);
+                flame.classList.add('blowing');
+                emitParticles();
+
+                blowDetectedTimer = setTimeout(extinguishFlame, SUSTAINED_BLOW_DURATION);
             }
         } else {
-            // Tidak ada tiupan atau tiupan berhenti
             if (flame.classList.contains('blowing')) {
-                flame.classList.remove('blowing'); // Nonaktifkan animasi "tertiup"
-                stopEmittingParticles(); // Hentikan emisi partikel
-                clearTimeout(blowDetectedTimer); // Hapus timer pemadaman
+                flame.classList.remove('blowing');
+                stopEmittingParticles();
+                clearTimeout(blowDetectedTimer);
             }
         }
 
@@ -109,34 +122,57 @@ function detectBlow(stream) {
     analyze();
 }
 
-function extinguishFlame() {
-    if (isExtinguished) return; // Mencegah pemadaman ganda
+// ============================
+//   EXTINGUISH FLAME
+// ============================
 
-    flame.classList.remove('blowing'); // Pastikan animasi blowing dihapus
-    flame.classList.add('extinguished'); // Aktifkan kelas padam
+function extinguishFlame() {
+    if (isExtinguished) return;
+
+    flame.classList.remove('blowing');
+    flame.classList.add('extinguished');
     isExtinguished = true;
 
-    stopEmittingParticles(); // Hentikan partikel sepenuhnya
+    stopEmittingParticles();
 
-    // Tampilkan pesan
     message.classList.remove('hidden');
-    message.textContent = "Hore! Lilinnya padam! ";
+    message.textContent = "Hore! Lilinnya padam! 🎉";
 
-    // Putar lagu ulang tahun
+    // Putar musik
     const birthdaySong = document.getElementById('birthdaySong');
-    birthdaySong.play().catch((error) => {
-        console.warn("Autoplay prevented:", error);
-    });
+    birthdaySong.play().catch(err => console.warn("Autoplay blocked:", err));
 
-    // Animasi asap
+    // Tampilkan asap
     smokePuffElement.style.opacity = 1;
     smokePuffElement.style.animation = 'smoke-rise 1s forwards ease-out';
 
-    // Putuskan koneksi mikrofon setelah padam
-    if (micSource) micSource.disconnect();
-    if (analyser) analyser.disconnect();
-    if (audioContext) audioContext.close();
+    // Tampilkan tombol hadiah
+    showGiftButton();
+
+    // Tutup mic
+    micSource?.disconnect();
+    analyser?.disconnect();
+    audioContext?.close();
 }
 
+// ============================
+//   SHOW GIFT BUTTON
+// ============================
+
+function showGiftButton() {
+    const btn = document.createElement('a');
+    btn.className = "gift-button";
+    btn.href = "https://frisy-a.github.io/19November/flower.html";
+    btn.innerHTML = "🎁 Buka Hadiah";
+
+    btn.style.opacity = "0";
+    btn.style.transition = "opacity 0.8s ease";
+
+    giftButtonContainer.appendChild(btn);
+
+    setTimeout(() => {
+        btn.style.opacity = "1";
+    }, 100);
+}
 
 window.onload = initMic;
