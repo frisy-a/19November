@@ -18,7 +18,7 @@ let particleInterval; // Variabel untuk menyimpan interval emisi partikel
 async function initMic() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-        micStatus.textContent = "🎤 Microphone aktif. Tiup Lilinya sampai padam sekarang!!!";
+        micStatus.textContent = "🎤 Microphone is active. Blow to extinguish!";
         detectBlow(stream);
     } catch (err) {
         micStatus.textContent = "🚫 Microphone access denied. Please allow microphone access to blow the candle.";
@@ -120,50 +120,9 @@ function extinguishFlame() {
 
     // Tampilkan pesan
     message.classList.remove('hidden');
+    message.textContent = "Hore! Lilinnya padam! ";
 
- {
- 
-    const a = document.createElement('a');
-    a.className = "gift-button";
-    a.href = "https://frisy-a.github.io/19November/flower.html";
-    a.title = "Selamat lilinnya sudah padam! Buka hadiahnya di sini";
-    a.innerHTML = '<span class="gift-emoji">🎁</span> Buka Hadiah';
-
-    document.body.appendChild(a);
-
-    // Tambahkan style langsung via JS jika tidak ingin CSS terpisah
-   const style = document.createElement("style");
-    style.innerHTML = `
-        .gift-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            background: #ff6699;
-            color: white;
-            padding: 15px 25px;
-            border-radius: 12px;
-            font-size: 18px;
-            font-weight: bold;
-            text-decoration: none;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(255, 0, 100, 0.3);
-            transition: 0.3s;
-            gap: 10px;
-        }
-        .gift-button:hover {
-            background: #ff3d85;
-            transform: scale(1.07);
-            box-shadow: 0 8px 20px rgba(255, 0, 130, 0.4);
-        }
-        .gift-emoji {
-            font-size: 24px;
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-
-      // Putar lagu ulang tahun
+    // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
     birthdaySong.play().catch((error) => {
         console.warn("Autoplay prevented:", error);
@@ -178,7 +137,6 @@ function extinguishFlame() {
     if (analyser) analyser.disconnect();
     if (audioContext) audioContext.close();
 }
-
 
 
 window.onload = initMic;
