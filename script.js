@@ -120,8 +120,8 @@ function extinguishFlame() {
 
     // Tampilkan pesan
     message.classList.remove('hidden');
-//    message.textContent = "Hore! Lilinnya padam! ";
-    {
+    message.textContent = "Hore! Lilinnya padam! ";
+/*    {
     const a = document.createElement('a');
 
     a.className = "gift-button";
@@ -130,7 +130,7 @@ function extinguishFlame() {
     a.innerHTML = `<span class="gift-emoji">🎁</span>Buka Hadiah
 `;
 }
-    // Putar lagu ulang tahun
+  */  // Putar lagu ulang tahun
     const birthdaySong = document.getElementById('birthdaySong');
     birthdaySong.play().catch((error) => {
         console.warn("Autoplay prevented:", error);
@@ -148,6 +148,7 @@ function extinguishFlame() {
 
 
 window.onload = initMic;
+
 
 
 
