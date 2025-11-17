@@ -121,57 +121,9 @@ function extinguishFlame() {
     // Tampilkan pesan
     message.classList.remove('hidden');
     message.textContent = "Hore! Lilinnya padam! ";
- // Buat elemen tombol
-    
-/* const a = document.createElement('a');
-a.className = "gift-button";
-a.href = "https://frisy-a.github.io/19November/flower.html";
-a.title = "Selamat lilinnya sudah padam! Buka hadiahnya di sini";
-a.innerHTML = `
-    <span class="gift-emoji">🎁</span>
-    Buka Hadiah
-`;
 
-// Cegah default click
-a.addEventListener("click", function (e) {
-    e.preventDefault();
-    showCutePopup(a.href);
-});
-
-document.body.appendChild(a);
-
-// --- Popup Lucu + Floating Hearts Wavy + Musik Fade ---
-function showCutePopup(link) {
-    if (document.querySelector('.cute-popup')) return;
-
-    const popup = document.createElement("div");
-    popup.className = "cute-popup";
-
-    popup.innerHTML = `
-        <div class="popup-box">
-            <div class="popup-emoji">✨🎁✨</div>
-            <div class="popup-text">
-                Yeayyy!! Sekali lagi selamat ulang tahun ya Marr.. <br><br>
-                Susah nggak niup Lilinya ☺️☺️☺️
-                Maaf yaa menyusahkanmu 🥹🥹🥹 <br><br>
-                
-                Hmmm.. Semoga kamu selalu baik-baik saja yaa 💗💗💗 <br>
-                I hope you’re always happy.. surrounded by people who cherish you, <br>
-                support you, and love you endlessly just the way you deserve 😇.  <br>
-                May Lord Jesus always be with you, watching over you, <br>
-                guiding your steps, and filling your heart with peace. <br>
-                Jesus bless you😇 <br>
-                <br><br>
-                 
-                Semoga bikin kamu senyum yaa 💞🥰 </div>
-            <button class="popup-btn"> Lanjut yaa 🩷</button>
-        </div>
-    `;
-}
-*/
-    
     // Putar lagu ulang tahun
-    const birthdaySong = document.getElementById('popup');
+    const birthdaySong = document.getElementById('birthdaySong');
     birthdaySong.play().catch((error) => {
         console.warn("Autoplay prevented:", error);
     });
@@ -188,9 +140,3 @@ function showCutePopup(link) {
 
 
 window.onload = initMic;
-
-
-
-
-
-
