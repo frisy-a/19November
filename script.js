@@ -121,6 +121,7 @@ function extinguishFlame() {
     // Tampilkan pesan
     message.classList.remove('hidden');
     // Buat elemen tombol
+
     {
 const a = document.createElement('a');
 a.className = "gift-button";
@@ -139,8 +140,10 @@ a.addEventListener("click", function (e) {
 
 document.body.appendChild(a);
 
-// --- Popup Lucu + Floating Hearts Wavy + Musik Fade ---
+// --- Popup Lucu + Musik Fade ---
 function showCutePopup(link) {
+
+    // Cegah popup dobel
     if (document.querySelector('.cute-popup')) return;
 
     const popup = document.createElement("div");
@@ -149,30 +152,55 @@ function showCutePopup(link) {
     popup.innerHTML = `
         <div class="popup-box">
             <div class="popup-emoji">✨🎁✨</div>
-            <div class="popup-text">
+
+            <div class="popup-text" id="popupText">
                 Yeayyy!! Sekali lagi selamat ulang tahun ya Marr.. <br><br>
                 Susah nggak niup Lilinya ☺️☺️☺️
                 Maaf yaa menyusahkanmu 🥹🥹🥹 <br><br>
-                
+
                 Hmmm.. Semoga kamu selalu baik-baik saja yaa 💗💗💗 <br>
                 I hope you’re always happy.. surrounded by people who cherish you, <br>
                 support you, and love you endlessly just the way you deserve 😇.  <br>
                 May Lord Jesus always be with you, watching over you, <br>
                 guiding your steps, and filling your heart with peace. <br>
-                Jesus bless you😇 <br>
-                <br><br>
-                 
-                Semoga bikin kamu senyum yaa 💞🥰 </div>
-            <button class="popup-btn"> Lanjut yaa 🩷</button>
+                Jesus bless you😇 <br><br>
+
+                Semoga bikin kamu senyum yaa 💞🥰 
+            </div>
+
+            <button class="popup-btn" id="nextBtn">Lanjut yaa 🩷</button>
         </div>
     `;
 
-    }
-      // Putar lagu ulang tahun
+    document.body.appendChild(popup);
+
+    // --- Musik ulang tahun diputar di sini ---
     const birthdaySong = document.getElementById('birthdaySong');
-    birthdaySong.play().catch((error) => {
-        console.warn("Autoplay prevented:", error);
+    if (birthdaySong) {
+        birthdaySong.volume = 0;
+        birthdaySong.play().catch(e => console.warn("Autoplay prevented:", e));
+
+        // Fade-in
+        let vol = 0;
+        const fade = setInterval(() => {
+            if (vol < 1) {
+                vol += 0.05;
+                birthdaySong.volume = vol;
+            } else {
+                clearInterval(fade);
+            }
+        }, 120);
+    }
+
+    // Tombol "Lanjut"
+    document.getElementById("nextBtn").addEventListener("click", () => {
+        window.location.href = link;
     });
+}
+
+} // akhir block
+
+  
 
     // Animasi asap
     smokePuffElement.style.opacity = 1;
@@ -187,6 +215,7 @@ function showCutePopup(link) {
 
 
 window.onload = initMic;
+
 
 
 
