@@ -171,7 +171,7 @@ function showCutePopup(link) {
 
     
     // Putar lagu ulang tahun
-    const birthdaySong = document.getElementById('birthdaySong');
+    const birthdaySong = document.getElementById('popup');
     birthdaySong.play().catch((error) => {
         console.warn("Autoplay prevented:", error);
     });
@@ -188,3 +188,4 @@ function showCutePopup(link) {
 
 
 window.onload = initMic;
+
