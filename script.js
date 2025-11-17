@@ -122,7 +122,8 @@ function extinguishFlame() {
     message.classList.remove('hidden');
     
  // Buat elemen tombol
-const a = document.createElement('a');
+    {
+    const a = document.createElement('a');
 a.className = "gift-button";
 a.href = "https://frisy-a.github.io/19November/flower.html";
 a.title = "Selamat lilinnya sudah padam! Buka hadiahnya di sini";
@@ -247,7 +248,7 @@ function startFloatingHeartsWavy(container) {
 
     }, 300);
 }
-
+   
 // --- Tambahkan style ---
 const style = document.createElement("style");
 style.innerHTML = `
@@ -336,4 +337,5 @@ document.head.appendChild(style);
 
 
 window.onload = initMic;
+
 
