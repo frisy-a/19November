@@ -369,6 +369,55 @@ body {
     background: #ff335a;
 }
 }
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.65);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
+
+.popup-box {
+    background: white;
+    padding: 25px;
+    max-width: 350px;
+    border-radius: 16px;
+    text-align: center;
+    animation: popupFade 0.4s ease;
+}
+
+.popup-text {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.popup-next {
+    padding: 10px 20px;
+    background: #ff4d6d;
+    border: none;
+    color: white;
+    font-size: 17px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.popup-next:hover {
+    background: #ff335a;
+}
+
+@keyframes popupFade {
+    from { opacity: 0; transform: scale(.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
 /* ===== Large Devices (Desktop) stays default ===== */
+
 
 
