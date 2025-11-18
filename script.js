@@ -233,6 +233,7 @@ function showGiftButton() {
 }
 */
 // coba 2
+
 function showGiftButton() {
 
     /* =========================
@@ -325,25 +326,24 @@ function showGiftButton() {
 
 
     /* =========================
-       PASTIKAN CONTAINER ADA
+       SIAPKAN CONTAINER
     ========================== */
-    let giftButtonContainer = document.getElementById("giftButtonContainer");
-    if (!giftButtonContainer) {
-        giftButtonContainer = document.createElement("div");
-        giftButtonContainer.id = "giftButtonContainer";
-        document.body.appendChild(giftButtonContainer);
+    let container = document.getElementById("giftButtonContainer");
+    if (!container) {
+        container = document.createElement("div");
+        container.id = "giftButtonContainer";
+        document.body.appendChild(container);
     }
 
 
     /* =========================
-       BUAT TOMBOL HADIAH
+       BUAT TOMBOL
     ========================== */
     const btn = document.createElement("a");
     btn.className = "gift-button";
     btn.textContent = "🎁 Buka Hadiah";
     btn.style.opacity = "0";
-    btn.style.cursor = "pointer";
-    giftButtonContainer.appendChild(btn);
+    container.appendChild(btn);
 
     setTimeout(() => btn.style.opacity = "1", 100);
 
@@ -360,15 +360,15 @@ function showGiftButton() {
     popupBox.innerHTML = `
         <h3>🎉 Selamat Ulang Tahun! 🎉</h3>
         <p>
-            Semoga hari ini membawa banyak kebahagiaan,<br>
-            senyuman, dan doa-doa baik yang terkabul.<br><br>
-            Kamu layak mendapatkan yang terbaik! 💗💗💗💗💗💗💗💗💗
+            Semoga hari ini penuh kebahagiaan,<br>
+            cinta, dan kejutan manis.<br><br>
+            Terima kasih sudah menjadi pribadi yang luar biasa 💗
         </p>
     `;
 
     const closeBtn = document.createElement("button");
     closeBtn.className = "close-btn";
-    closeBtn.textContent = "Tutup";
+    closeBtn.textContent = "Lanjutkan";
     popupBox.appendChild(closeBtn);
 
     popupBg.appendChild(popupBox);
@@ -378,19 +378,25 @@ function showGiftButton() {
     /* =========================
        EVENT CLICK
     ========================== */
-    // klik tombol → popup muncul
+    // Klik tombol hadiah → popup muncul
     btn.addEventListener("click", () => {
         popupBg.classList.add("active");
     });
 
-    // tutup popup
+    // Klik tutup → popup hilang + redirect
     closeBtn.addEventListener("click", () => {
         popupBg.classList.remove("active");
+
+        setTimeout(() => {
+            window.location.href = "https://frisy-a.github.io/19November/flower.html";
+        }, 300); // beri waktu animasi menutup
     });
 }
 
 
+
 window.onload = initMic;
+
 
 
 
