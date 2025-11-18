@@ -1,134 +1,171 @@
-//--------------------------------------
-// DETEKSI TIUPAN FIXED
-//--------------------------------------
-let flame = document.getElementById("flame");
-let message = document.getElementById("wishMessage");
-let micStatus = document.getElementById("micStatus");
-let smokePuff = document.getElementById("smokePuff");
+let blowCount = 0;
+const flame = document.getElementById('flame');
+const message = document.getElementById('wishMessage');
+const micStatus = document.getElementById('micStatus');
+const fireParticlesContainer = document.getElementById('fireParticles');
+const smokePuffElement = document.getElementById('smokePuff');
+const giftButtonContainer = document.getElementById('giftButtonContainer'); // container tombol hadiah
 
-let audioContext, analyser, dataArray;
-let candleBlown = false;
+let audioContext;
+let analyser;
+let micSource;
+let isExtinguished = false;
+let blowDetectedTimer;
 
-async function startMic() {
+const BLOW_THRESHOLD_VOLUME = 90;
+const SUSTAINED_BLOW_DURATION = 700;
+const PARTICLE_EMIT_INTERVAL = 55;
+let particleInterval;
+
+// ============================
+//   MIC INITIALIZATION
+// ============================
+async function initMic() {
     try {
-        audioContext = new (window.AudioContext || window.webkitAudioContext)();
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-        const micSource = audioContext.createMediaStreamSource(stream);
-        analyser = audioContext.createAnalyser();
-        analyser.fftSize = 512;
+        micStatus.textContent = "🎤 Microphone is active. Blow to extinguish!";
+        detectBlow(stream);
 
-        micSource.connect(analyser);
-        dataArray = new Uint8Array(analyser.frequencyBinCount);
-
-        micStatus.innerText = "🎤 Mic Aktif - Tiup untuk memadamkan";
-        detectBlow();
     } catch (err) {
-        micStatus.innerText = "❌ Akses mic ditolak!";
-        console.error(err);
+        micStatus.textContent = "🚫 Microphone access denied. Please allow microphone access.";
+        console.error("Error accessing microphone:", err);
     }
 }
 
-function detectBlow() {
-    function loop() {
-        analyser.getByteFrequencyData(dataArray);
-        let volume = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
+// ============================
+//     FIRE PARTICLES
+// ============================
+function createFireParticle() {
+    const particle = document.createElement('div');
+    particle.classList.add('fire-particle');
 
-        // Efek api goyang
-        flame.style.opacity = Math.max(0.2, 1 - volume / 90);
+    const startX = Math.random() * 10 - 5;
+    const startY = Math.random() * 5;
 
-        // PADAM jika volume besar
-        if (volume > 50 && !candleBlown) {
-            extinguishCandle();
-            candleBlown = true;
+    particle.style.left = `${50 + (startX / 15) * 100}%`;
+    particle.style.top = `${-15 + startY}px`;
+    particle.style.width = `${Math.random() * 5 + 3}px`;
+    particle.style.height = `${Math.random() * 8 + 5}px`;
+
+    const dx = (Math.random() - 0.5) * 60;
+    const dy = -(Math.random() * 40 + 30);
+
+    particle.style.setProperty('--dx', `${dx}px`);
+    particle.style.setProperty('--dy', `${dy}px`);
+
+    fireParticlesContainer.appendChild(particle);
+
+    particle.addEventListener('animationend', () => particle.remove());
+}
+
+function emitParticles() {
+    clearInterval(particleInterval);
+    particleInterval = setInterval(createFireParticle, PARTICLE_EMIT_INTERVAL);
+}
+
+function stopEmittingParticles() {
+    clearInterval(particleInterval);
+}
+
+// ============================
+//       BLOW DETECTION
+// ============================
+function detectBlow(stream) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    micSource = audioContext.createMediaStreamSource(stream);
+    analyser = audioContext.createAnalyser();
+
+    analyser.fftSize = 256;
+    analyser.smoothingTimeConstant = 0.7;
+
+    micSource.connect(analyser);
+
+    const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+    function analyze() {
+        if (isExtinguished) {
+            micSource?.disconnect();
+            analyser?.disconnect();
+            audioContext?.close();
+            return;
         }
 
-        requestAnimationFrame(loop);
+        analyser.getByteFrequencyData(dataArray);
+        const volume = dataArray.reduce((a, v) => a + v, 0) / dataArray.length;
+
+        if (volume > BLOW_THRESHOLD_VOLUME) {
+            if (!flame.classList.contains('blowing')) {
+                flame.classList.add('blowing');
+                emitParticles();
+
+                blowDetectedTimer = setTimeout(extinguishFlame, SUSTAINED_BLOW_DURATION);
+            }
+        } else {
+            if (flame.classList.contains('blowing')) {
+                flame.classList.remove('blowing');
+                stopEmittingParticles();
+                clearTimeout(blowDetectedTimer);
+            }
+        }
+
+        requestAnimationFrame(analyze);
     }
-    loop();
+
+    analyze();
 }
 
-function extinguishCandle() {
-    flame.style.opacity = 0;
+// ============================
+//       EXTINGUISH FLAME
+// ============================
+function extinguishFlame() {
+    if (isExtinguished) return;
 
-    smokePuff.classList.add("show");
+    flame.classList.remove('blowing');
+    flame.classList.add('extinguished');
+    isExtinguished = true;
 
-    message.innerText = "Yeay! Lilinnya sudah padam 🎉";
-    micStatus.innerText = "Mic dimatikan";
+    stopEmittingParticles();
 
-    // Tampilkan tombol hadiah
+    // Pesan lilin padam
+    message.classList.remove('hidden');
+    message.textContent = "Hore! Lilinnya padam! 🎉";
+
+    // Putar musik
+    const birthdaySong = document.getElementById('birthdaySong');
+    birthdaySong.play().catch((err) => console.warn("Autoplay prevented:", err));
+
+    // Animasi asap
+    smokePuffElement.style.opacity = 1;
+    smokePuffElement.style.animation = 'smoke-rise 1s forwards ease-out';
+
+    // 👉 Tampilkan tombol hadiah
     showGiftButton();
+
+    micSource?.disconnect();
+    analyser?.disconnect();
+    audioContext?.close();
 }
 
-//------------------------------------------------------
-// TOMBOL HADIAH + POPUP
-//------------------------------------------------------
+// ============================
+//       SHOW GIFT BUTTON
+// ============================
 function showGiftButton() {
-    const btn = document.createElement("button");
-    btn.id = "openPopupBtn";
-    btn.innerText = "🎁 Lihat Hadiah";
+    const btn = document.createElement('a');
+    btn.className = "gift-button";
+    btn.href = "https://frisy-a.github.io/19November/flower.html";
+    btn.innerHTML = "🎁 Buka Hadiah";
 
-    btn.style.cssText = `
-        display:block;
-        margin:20px auto;
-        padding:12px 22px;
-        background:#ff4d6d;
-        color:white;
-        border:none;
-        border-radius:10px;
-        font-size:18px;
-        cursor:pointer;
-        box-shadow:0 4px 8px rgba(0,0,0,0.2);
-    `;
+    // Tambahkan animasi fade-in
+    btn.style.opacity = "0";
+    btn.style.transition = "opacity 0.8s ease";
+    
+    giftButtonContainer.appendChild(btn);
 
-    document.body.appendChild(btn);
-
-    btn.addEventListener("click", () => {
-        openPopup();
-    });
+    setTimeout(() => {
+        btn.style.opacity = "1";
+    }, 100);
 }
 
-//------------------------------------------------------
-// POPUP dengan text NEXT per paragraf + musik
-//------------------------------------------------------
-const popup = document.getElementById("popup");
-const popupText = document.getElementById("popupText");
-const nextButton = document.getElementById("nextButton");
-const popupMusic = document.getElementById("popupMusic");
+window.onload = initMic;
 
-// Isi paragraf
-const paragraphs = [
-    "Selamat yaa! Kamu sudah berhasil meniup lilinnya 🎉",
-    "Aku sudah menyiapkan sesuatu yang spesial untukmu.",
-    "Semoga hadiah kecil ini bisa membuat harimu lebih indah ✨",
-    "Sekarang… siap untuk membuka hadiahnya? 💐"
-];
-
-let currentIndex = 0;
-
-function openPopup() {
-    popup.style.display = "flex";
-    popupText.innerText = paragraphs[currentIndex];
-
-    // Putar musik popup
-    popupMusic.play().catch(err => console.log("Autoplay diblok:", err));
-
-    nextButton.onclick = nextParagraph;
-}
-
-function nextParagraph() {
-    currentIndex++;
-
-    if (currentIndex < paragraphs.length) {
-        popupText.innerText = paragraphs[currentIndex];
-    } else {
-        // Ubah tombol menjadi tombol buka hadiah
-        nextButton.innerText = "🎁 Buka Hadiah";
-        nextButton.onclick = () => {
-            window.location.href = "https://frisy-a.github.io/19November/flower.html";
-        };
-    }
-}
-
-// Mulai mic otomatis ketika halaman load
-window.onload = startMic;
