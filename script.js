@@ -1,10 +1,19 @@
+// ============================
+//   VARIABLE SETUP
+// ============================
+
 let blowCount = 0;
 const flame = document.getElementById('flame');
 const message = document.getElementById('wishMessage');
 const micStatus = document.getElementById('micStatus');
 const fireParticlesContainer = document.getElementById('fireParticles');
 const smokePuffElement = document.getElementById('smokePuff');
-const giftButtonContainer = document.getElementById('giftButtonContainer'); // container tombol hadiah
+const giftButtonContainer = document.getElementById('giftButtonContainer');
+
+// Popup elements
+const popup = document.getElementById("popupMessage");
+const popupText = document.getElementById("popupText");
+const popupNext = document.getElementById("popupNext");
 
 let audioContext;
 let analyser;
@@ -17,25 +26,37 @@ const SUSTAINED_BLOW_DURATION = 700;
 const PARTICLE_EMIT_INTERVAL = 55;
 let particleInterval;
 
+// Popup message list
+const popupParagraphs = [
+    "Halo! Terima kasih sudah meniup lilin ini 💖",
+    "Semoga semua harapan kamu tercapai dan hari ini penuh kebahagiaan 🎂✨",
+    "Ada sesuatu yang spesial aku siapin buat kamu...",
+    "Klik tombol di bawah ini untuk membuka hadiahnya 🎁"
+];
+
+let currentPopupIndex = 0;
+
 // ============================
-//   MIC INITIALIZATION
+//   INIT MIC
 // ============================
+
 async function initMic() {
     try {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-        micStatus.textContent = "🎤 Microphone is active. Blow to extinguish!";
+        micStatus.textContent = "🎤 Microphone aktif. Tiup untuk memadamkan!";
         detectBlow(stream);
 
     } catch (err) {
-        micStatus.textContent = "🚫 Microphone access denied. Please allow microphone access.";
-        console.error("Error accessing microphone:", err);
+        micStatus.textContent = "🚫 Mic ditolak. Tidak bisa mendeteksi tiupan.";
+        console.error("Mic Error:", err);
     }
 }
 
 // ============================
-//     FIRE PARTICLES
+//   FIRE PARTICLES
 // ============================
+
 function createFireParticle() {
     const particle = document.createElement('div');
     particle.classList.add('fire-particle');
@@ -69,8 +90,9 @@ function stopEmittingParticles() {
 }
 
 // ============================
-//       BLOW DETECTION
+//   DETECT BLOW
 // ============================
+
 function detectBlow(stream) {
     audioContext = new (window.AudioContext || window.webkitAudioContext)();
     micSource = audioContext.createMediaStreamSource(stream);
@@ -116,8 +138,9 @@ function detectBlow(stream) {
 }
 
 // ============================
-//       EXTINGUISH FLAME
+//   EXTINGUISH FLAME
 // ============================
+
 function extinguishFlame() {
     if (isExtinguished) return;
 
@@ -127,44 +150,48 @@ function extinguishFlame() {
 
     stopEmittingParticles();
 
-    // Pesan lilin padam
     message.classList.remove('hidden');
     message.textContent = "Hore! Lilinnya padam! 🎉";
 
-    // Putar musik
-    const birthdaySong = document.getElementById('birthdaySong');
-    birthdaySong.play().catch((err) => console.warn("Autoplay prevented:", err));
-
-    // Animasi asap
+    // Asap
     smokePuffElement.style.opacity = 1;
     smokePuffElement.style.animation = 'smoke-rise 1s forwards ease-out';
 
-    // 👉 Tampilkan tombol hadiah
-    showGiftButton();
+    // Buka popup
+    setTimeout(() => openPopup(), 800);
 
+    // Tutup mic
     micSource?.disconnect();
     analyser?.disconnect();
     audioContext?.close();
 }
 
 // ============================
-//       SHOW GIFT BUTTON
+//   POPUP LOGIC
 // ============================
-function showGiftButton() {
-    const btn = document.createElement('a');
-    btn.className = "gift-button";
-    btn.href = "https://frisy-a.github.io/19November/flower.html";
-    btn.innerHTML = "🎁 Buka Hadiah";
 
-    // Tambahkan animasi fade-in
-    btn.style.opacity = "0";
-    btn.style.transition = "opacity 0.8s ease";
-    
-    giftButtonContainer.appendChild(btn);
+function openPopup() {
+    popup.style.display = "flex";
+    popupText.textContent = popupParagraphs[0];
 
-    setTimeout(() => {
-        btn.style.opacity = "1";
-    }, 100);
+    // Putar musik popup
+    const popupMusic = document.getElementById("popupMusic");
+    popupMusic.play().catch(e => console.log("Autoplay blocked"));
 }
+
+popupNext.addEventListener("click", () => {
+    currentPopupIndex++;
+
+    if (currentPopupIndex < popupParagraphs.length - 1) {
+        popupText.textContent = popupParagraphs[currentPopupIndex];
+    } 
+    else if (currentPopupIndex === popupParagraphs.length - 1) {
+        popupText.textContent = popupParagraphs[currentPopupIndex];
+        popupNext.textContent = "🎁 Buka Hadiah";
+    }
+    else {
+        window.location.href = "https://frisy-a.github.io/19November/flower.html";
+    }
+});
 
 window.onload = initMic;
