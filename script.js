@@ -785,7 +785,7 @@ function showGiftButton() {
     //suara huruf
     const typeSound = document.createElement("audio");
     const typeSource = document.createElement("source");
-    //typeSource.src = "typing.mp3"; // suara ketik pendek
+    typeSource.src = "popup.mp3"; // suara ketik pendek
     typeSource.type = "audio/mpeg";
     typeSound.appendChild(typeSource);
     document.body.appendChild(typeSound);
@@ -866,6 +866,7 @@ function showGiftButton() {
 
 
 window.onload = initMic;
+
 
 
 
