@@ -398,12 +398,12 @@ function showGiftButton() {
 }
 */
 //COBA3
-
+/*
 function showGiftButton() {
 
     /* =========================
        TAMBAHKAN CSS
-    ========================== */
+    ========================== 
     const style = document.createElement("style");
     style.textContent = `
         .gift-button {
@@ -499,7 +499,7 @@ function showGiftButton() {
 
     /* =========================
        BUAT CONTAINER
-    ========================== */
+    ========================== 
     let container = document.getElementById("giftButtonContainer");
     if (!container) {
         container = document.createElement("div");
@@ -510,7 +510,7 @@ function showGiftButton() {
 
     /* =========================
        TOMBOL HADIAH
-    ========================== */
+    ========================== 
     const btn = document.createElement("a");
     btn.className = "gift-button";
     btn.textContent = "🎁 Buka Hadiah";
@@ -521,7 +521,7 @@ function showGiftButton() {
 
     /* =========================
        POPUP ELEMENTS
-    ========================== */
+    ========================== 
     const popupBg = document.createElement("div");
     popupBg.className = "popup-bg";
 
@@ -544,7 +544,7 @@ function showGiftButton() {
 
     /* =========================
        CUSTOM MUSIC DI SINI
-    ========================== */
+    ========================== 
     const audio = document.createElement("audio");
     audio.volume = 0.7;
 
@@ -558,7 +558,7 @@ function showGiftButton() {
 
     /* =========================
        TEXT PER KLIK
-    ========================== */
+    ========================== 
 
     // *** EDIT TEKSNYA DI SINI ***
     const messages = [
@@ -585,7 +585,7 @@ function showGiftButton() {
 
     /* =========================
        EVENT HANDLER
-    ========================== */
+    ========================== 
 
     // buka popup
     btn.addEventListener("click", () => {
@@ -601,14 +601,14 @@ function showGiftButton() {
     });
 }
 
+*/
+//-----------------------------------------------
 
-
-/*
 function showGiftButton() {
 
     /* =========================
        TAMBAHKAN CSS
-    ========================== 
+    ========================== */
     const style = document.createElement("style");
     style.textContent = `
         .gift-button {
@@ -732,7 +732,7 @@ function showGiftButton() {
 
     /* =========================
        CONTAINER
-    ========================== 
+    ========================== */
     let container = document.getElementById("giftButtonContainer");
     if (!container) {
         container = document.createElement("div");
@@ -742,7 +742,7 @@ function showGiftButton() {
 
     /* =========================
        TOMBOL HADIAH
-    ========================== 
+    ========================== */
     const btn = document.createElement("a");
     btn.className = "gift-button";
     btn.textContent = "🎁 Buka Hadiah";
@@ -752,7 +752,7 @@ function showGiftButton() {
 
     /* =========================
        POPUP
-    ========================== 
+    ========================== */
     const popupBg = document.createElement("div");
     popupBg.className = "popup-bg";
 
@@ -773,7 +773,7 @@ function showGiftButton() {
 
     /* =========================
        AUDIO LOKAL & TYPING SOUND
-    ========================== 
+    ========================== */
     const audio = document.createElement("audio");
     audio.volume = 0.7;
     const source = document.createElement("source");
@@ -792,7 +792,7 @@ function showGiftButton() {
 
     /* =========================
        TEKS
-    ========================== 
+    ========================== */
     const messages = [
         "🎉 Selamat Ulang Tahun! 🎉",
         "Hari ini hari spesialmu.",
@@ -806,7 +806,7 @@ function showGiftButton() {
 
     /* =========================
        FUNGSI TYPING DENGAN SUARA
-    ========================== 
+    ========================== */
     function typeText(text, callback) {
         textBox.textContent = "";
         let i = 0;
@@ -837,7 +837,7 @@ function showGiftButton() {
 
     /* =========================
        CONFETTI
-    ========================== 
+    ========================== */
     function createConfetti() {
         for (let i = 0; i < 50; i++) {
             const c = document.createElement("div");
@@ -851,7 +851,7 @@ function showGiftButton() {
 
     /* =========================
        EVENT
-    ========================== 
+    ========================== */
     btn.addEventListener("click", () => {
         popupBg.classList.add("active");
         index = 0;
@@ -864,8 +864,9 @@ function showGiftButton() {
     });
 }
 
-*/
+
 window.onload = initMic;
+
 
 
 
