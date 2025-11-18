@@ -756,7 +756,7 @@ function showGiftButton() {
 
     const nextBtn = document.createElement("button");
     nextBtn.className = "next-btn";
-    nextBtn.textContent = "Next";
+    nextBtn.textContent = "Lanjut";
 
     popupBox.appendChild(textBox);
     popupBox.appendChild(nextBtn);
@@ -782,12 +782,12 @@ function showGiftButton() {
 
     
     const messages = [
-        "Selamat Ulang Tahun MArr!💗",
-        "Hari ini hari spesialmu kan ya. mungkin rasanya kek hari biasa aja kan ya, maklum sih kalau ngrasa gitu  berati emang sudah tua hehe",
-        "Semoga ini bisa bikin harimu jadi lebih sepsial Mar, Maap yaa.",
-        "May Jesus Christus bless you abundantly, surround your days with His gentle peace, guide every step you take with His loving light, and fill your heart with a love so warm and pure that it embraces your soul every single day. May His grace rest upon you, strengthen you, and keep you safe, now and forever.",
-        "Terima kasih sudah ada 💗",
-        "Sekarang… waktunya membuka hadiahmu!"
+        "Haii Marr... Apa Kabar..💗 Selamat Ulang Tahun yaa!💗.. Susah ndak tadi niup lilinnya? hehe😅",
+        "Hari ini hari spesialmu kan ya... Hmmm mungkin hari ini rasanya kek hari biasanya ya..?? maklum sih kalau ngerasa begitu berati emang sudah tua hehe",
+        "Semoga ini bisa bikin harimu jadi lebih sepsial Marr, Maapkan yaa.",
+        "May Jesus Christus bless you abundantly,,,😇 Surround your days with His gentle peace,,,😇 Guide every step you take with His loving light,,,😇 and fill your heart with a love so warm and pure that it embraces your soul every single day😇. May His grace rest upon you, strengthen you, and keep you safe, now and forever😇.... AMIN!",
+        "Maap ya itu tadi bahasanya nyomot dari Chat GPT, kelihatan banget kan ya hehe..😅 maklum tidak bisa berkata-kata aku hehe..🤣  Hmm Intinya Maar kamu harus tetap kuat dan selalu bahagia yaa..🥹💗",
+        "Tuhan Yesus Berkahi Marr!!.. ini ada terakhir buat kamu.. semoga suka yaa💗💗💗"
     ];
 
     let index = 0;
@@ -847,6 +847,7 @@ function showGiftButton() {
 
 
 window.onload = initMic;
+
 
 
 
