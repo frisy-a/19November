@@ -794,8 +794,8 @@ function showGiftButton() {
        TEKS
     ========================== */
     const messages = [
-        "🎉 Selamat Ulang Tahun! 🎉",
-        "Hari ini hari spesialmu.",
+        "Selamat Ulang Tahun MArr!💗",
+        "Hari ini hari spesialmu kan ya. mungkin rasanya biasa aja kan ya, maklum sih kalau biasa aja brati emag sudah tua hehe",
         "Semoga kamu selalu dikelilingi kebahagiaan.",
         "Kamu adalah orang yang luar biasa.",
         "Terima kasih sudah ada 💗",
@@ -866,6 +866,7 @@ function showGiftButton() {
 
 
 window.onload = initMic;
+
 
 
 
