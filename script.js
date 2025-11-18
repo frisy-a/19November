@@ -545,7 +545,7 @@ function showGiftButton() {
     /* =========================
        CUSTOM MUSIC DI SINI
     ========================== */
-    const audio = new Audio("https://cdn.pixabay.com/download/audio/2021/10/20/audio_13ab05d2fe.mp3?filename=romantic-melody-12284.mp3");
+    const audio = new Audio("popup.mp3");
     audio.volume = 0.7;
 
 
@@ -598,6 +598,7 @@ function showGiftButton() {
 
 
 window.onload = initMic;
+
 
 
 
