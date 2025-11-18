@@ -167,6 +167,9 @@ function extinguishFlame() {
     }, 100);
 }
 */
+//coba 1
+
+/*
 function showGiftButton() {
     // --- Buat CSS melalui JavaScript ---
     const style = document.createElement("style");
@@ -228,8 +231,166 @@ function showGiftButton() {
         btn.style.opacity = "1";
     }, 100);
 }
+*/
+// coba 2
+function showGiftButton() {
+
+    /* =========================
+       TAMBAHKAN CSS LEWAT JS
+    ========================== */
+    const style = document.createElement("style");
+    style.textContent = `
+        .gift-button {
+            display: inline-block;
+            padding: 14px 26px;
+            background: linear-gradient(135deg, #ff4d79, #ff7aa8);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(255, 105, 135, 0.4);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.8s ease;
+            opacity: 0;
+            cursor: pointer;
+
+            animation: softGlow 2.5s infinite alternate ease-in-out,
+                       floating 3s ease-in-out infinite;
+        }
+
+        .gift-button:hover {
+            transform: scale(1.09);
+            box-shadow: 0 12px 25px rgba(255, 105, 135, 0.6);
+        }
+
+        @keyframes softGlow {
+            0% { box-shadow: 0 0 10px rgba(255, 120, 150, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(255, 120, 150, 0.9); }
+        }
+
+        @keyframes floating {
+            0%   { transform: translateY(0); }
+            50%  { transform: translateY(-6px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* POPUP */
+        .popup-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity .4s;
+            pointer-events: none;
+        }
+
+        .popup-box {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            max-width: 320px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            transform: scale(0.8);
+            transition: transform .4s ease;
+        }
+
+        .popup-bg.active {
+            pointer-events: auto;
+            opacity: 1;
+        }
+
+        .popup-bg.active .popup-box {
+            transform: scale(1);
+        }
+
+        .close-btn {
+            margin-top: 15px;
+            padding: 8px 18px;
+            background: #ff4d79;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            border: none;
+        }
+    `;
+    document.head.appendChild(style);
+
+
+    /* =========================
+       PASTIKAN CONTAINER ADA
+    ========================== */
+    let giftButtonContainer = document.getElementById("giftButtonContainer");
+    if (!giftButtonContainer) {
+        giftButtonContainer = document.createElement("div");
+        giftButtonContainer.id = "giftButtonContainer";
+        document.body.appendChild(giftButtonContainer);
+    }
+
+
+    /* =========================
+       BUAT TOMBOL HADIAH
+    ========================== */
+    const btn = document.createElement("a");
+    btn.className = "gift-button";
+    btn.textContent = "🎁 Buka Hadiah";
+    btn.style.opacity = "0";
+    btn.style.cursor = "pointer";
+    giftButtonContainer.appendChild(btn);
+
+    setTimeout(() => btn.style.opacity = "1", 100);
+
+
+    /* =========================
+       BUAT POPUP
+    ========================== */
+    const popupBg = document.createElement("div");
+    popupBg.className = "popup-bg";
+
+    const popupBox = document.createElement("div");
+    popupBox.className = "popup-box";
+
+    popupBox.innerHTML = `
+        <h3>🎉 Selamat Ulang Tahun! 🎉</h3>
+        <p>
+            Semoga hari ini membawa banyak kebahagiaan,<br>
+            senyuman, dan doa-doa baik yang terkabul.<br><br>
+            Kamu layak mendapatkan yang terbaik! 💗
+        </p>
+    `;
+
+    const closeBtn = document.createElement("button");
+    closeBtn.className = "close-btn";
+    closeBtn.textContent = "Tutup";
+    popupBox.appendChild(closeBtn);
+
+    popupBg.appendChild(popupBox);
+    document.body.appendChild(popupBg);
+
+
+    /* =========================
+       EVENT CLICK
+    ========================== */
+    // klik tombol → popup muncul
+    btn.addEventListener("click", () => {
+        popupBg.classList.add("active");
+    });
+
+    // tutup popup
+    closeBtn.addEventListener("click", () => {
+        popupBg.classList.remove("active");
+    });
+}
 
 
 window.onload = initMic;
+
 
 
