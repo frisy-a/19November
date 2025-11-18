@@ -606,9 +606,6 @@ function showGiftButton() {
 
 function showGiftButton() {
 
-    /* =========================
-       TAMBAHKAN CSS
-    ========================== */
     const style = document.createElement("style");
     style.textContent = `
         .gift-button {
@@ -730,9 +727,8 @@ function showGiftButton() {
     `;
     document.head.appendChild(style);
 
-    /* =========================
-       CONTAINER
-    ========================== */
+    
+    
     let container = document.getElementById("giftButtonContainer");
     if (!container) {
         container = document.createElement("div");
@@ -740,9 +736,7 @@ function showGiftButton() {
         document.body.appendChild(container);
     }
 
-    /* =========================
-       TOMBOL HADIAH
-    ========================== */
+    
     const btn = document.createElement("a");
     btn.className = "gift-button";
     btn.textContent = "🎁 Buka Hadiah";
@@ -750,9 +744,7 @@ function showGiftButton() {
 
     setTimeout(() => btn.style.opacity = "1", 100);
 
-    /* =========================
-       POPUP
-    ========================== */
+    
     const popupBg = document.createElement("div");
     popupBg.className = "popup-bg";
 
@@ -771,9 +763,7 @@ function showGiftButton() {
     popupBg.appendChild(popupBox);
     document.body.appendChild(popupBg);
 
-    /* =========================
-       AUDIO LOKAL & TYPING SOUND
-    ========================== */
+    
     const audio = document.createElement("audio");
     audio.volume = 0.7;
     const source = document.createElement("source");
@@ -785,14 +775,12 @@ function showGiftButton() {
     //suara huruf
     const typeSound = document.createElement("audio");
     const typeSource = document.createElement("source");
-    typeSource.src = "popup.mp3"; // suara ketik pendek
+    typeSource.src = "typing.mp3"; // suara ketik pendek
     typeSource.type = "audio/mpeg";
     typeSound.appendChild(typeSource);
     document.body.appendChild(typeSound);
 
-    /* =========================
-       TEKS
-    ========================== */
+    
     const messages = [
         "Selamat Ulang Tahun MArr!💗",
         "Hari ini hari spesialmu kan ya. mungkin rasanya biasa aja kan ya, maklum sih kalau biasa aja brati emag sudah tua hehe",
@@ -804,9 +792,7 @@ function showGiftButton() {
 
     let index = 0;
 
-    /* =========================
-       FUNGSI TYPING DENGAN SUARA
-    ========================== */
+    
     function typeText(text, callback) {
         textBox.textContent = "";
         let i = 0;
@@ -835,9 +821,7 @@ function showGiftButton() {
         }
     }
 
-    /* =========================
-       CONFETTI
-    ========================== */
+   
     function createConfetti() {
         for (let i = 0; i < 50; i++) {
             const c = document.createElement("div");
@@ -849,9 +833,6 @@ function showGiftButton() {
         }
     }
 
-    /* =========================
-       EVENT
-    ========================== */
     btn.addEventListener("click", () => {
         popupBg.classList.add("active");
         index = 0;
@@ -866,6 +847,7 @@ function showGiftButton() {
 
 
 window.onload = initMic;
+
 
 
 
