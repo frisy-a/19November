@@ -545,8 +545,15 @@ function showGiftButton() {
     /* =========================
        CUSTOM MUSIC DI SINI
     ========================== */
-    const audio = new Audio("popup.mp3");
+    const audio = document.createElement("audio");
     audio.volume = 0.7;
+
+    const source = document.createElement("source");
+    source.src = "popup.mp3";   // ganti sesuai nama file MP3 lokalmu
+    source.type = "audio/mpeg";
+
+    audio.appendChild(source);
+    document.body.appendChild(audio);
 
 
     /* =========================
@@ -598,6 +605,7 @@ function showGiftButton() {
 
 
 window.onload = initMic;
+
 
 
 
