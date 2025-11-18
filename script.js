@@ -233,12 +233,9 @@ function showGiftButton() {
 }
 */
 // coba 2
-
+/*
 function showGiftButton() {
 
-    /* =========================
-       TAMBAHKAN CSS LEWAT JS
-    ========================== */
     const style = document.createElement("style");
     style.textContent = `
         .gift-button {
@@ -276,7 +273,7 @@ function showGiftButton() {
         }
 
         /* POPUP */
-        .popup-bg {
+  /*      .popup-bg {
             position: fixed;
             top: 0;
             left: 0;
@@ -301,14 +298,14 @@ function showGiftButton() {
             transform: scale(0.8);
             transition: transform .4s ease;
             
-            /* FIX: membuat teks terlihat */
+            /* FIX: membuat teks terlihat 
             color: #333;
             font-size: 1rem;
         }
 
         .popup-box h3 {
             margin-top: 0;
-            color: #ff4d79; /* warna judul */
+            color: #ff4d79; /* warna judul 
         }
 
         .popup-bg.active {
@@ -336,7 +333,7 @@ function showGiftButton() {
 
     /* =========================
        SIAPKAN CONTAINER
-    ========================== */
+    ========================== 
     let container = document.getElementById("giftButtonContainer");
     if (!container) {
         container = document.createElement("div");
@@ -347,7 +344,7 @@ function showGiftButton() {
 
     /* =========================
        BUAT TOMBOL
-    ========================== */
+    ========================== 
     const btn = document.createElement("a");
     btn.className = "gift-button";
     btn.textContent = "🎁 Buka Hadiah";
@@ -359,7 +356,7 @@ function showGiftButton() {
 
     /* =========================
        BUAT POPUP
-    ========================== */
+    ========================== 
     const popupBg = document.createElement("div");
     popupBg.className = "popup-bg";
 
@@ -386,7 +383,7 @@ function showGiftButton() {
 
     /* =========================
        EVENT CLICK
-    ========================== */
+    ========================== 
     btn.addEventListener("click", () => {
         popupBg.classList.add("active");
     });
@@ -399,11 +396,209 @@ function showGiftButton() {
         }, 300);
     });
 }
+*/
+//COBA3
+
+function showGiftButton() {
+
+    /* =========================
+       TAMBAHKAN CSS
+    ========================== */
+    const style = document.createElement("style");
+    style.textContent = `
+        .gift-button {
+            display: inline-block;
+            padding: 14px 26px;
+            background: linear-gradient(135deg, #ff4d79, #ff7aa8);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(255, 105, 135, 0.4);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.8s ease;
+            cursor: pointer;
+            opacity: 0;
+            animation: softGlow 2.5s infinite alternate ease-in-out,
+                       floating 3s ease-in-out infinite;
+        }
+
+        .gift-button:hover {
+            transform: scale(1.09);
+            box-shadow: 0 12px 25px rgba(255, 105, 135, 0.6);
+        }
+
+        @keyframes softGlow {
+            0% { box-shadow: 0 0 10px rgba(255, 120, 150, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(255, 120, 150, 0.9); }
+        }
+
+        @keyframes floating {
+            0%   { transform: translateY(0); }
+            50%  { transform: translateY(-6px); }
+            100% { transform: translateY(0); }
+        }
+
+        /* Popup */
+        .popup-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.65);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .4s ease;
+        }
+
+        .popup-bg.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .popup-box {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            width: 300px;
+            text-align: center;
+            color: #333;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+            transform: scale(0.8);
+            transition: transform .4s ease;
+        }
+
+        .popup-bg.active .popup-box {
+            transform: scale(1);
+        }
+
+        .message-text {
+            min-height: 120px;
+            white-space: pre-line;
+            font-size: 1rem;
+            line-height: 1.4em;
+        }
+
+        .next-btn {
+            margin-top: 15px;
+            padding: 10px 20px;
+            background: #ff4d79;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+    `;
+    document.head.appendChild(style);
+
+
+    /* =========================
+       BUAT CONTAINER
+    ========================== */
+    let container = document.getElementById("giftButtonContainer");
+    if (!container) {
+        container = document.createElement("div");
+        container.id = "giftButtonContainer";
+        document.body.appendChild(container);
+    }
+
+
+    /* =========================
+       TOMBOL HADIAH
+    ========================== */
+    const btn = document.createElement("a");
+    btn.className = "gift-button";
+    btn.textContent = "🎁 Buka Hadiah";
+    container.appendChild(btn);
+
+    setTimeout(() => btn.style.opacity = "1", 100);
+
+
+    /* =========================
+       POPUP ELEMENTS
+    ========================== */
+    const popupBg = document.createElement("div");
+    popupBg.className = "popup-bg";
+
+    const popupBox = document.createElement("div");
+    popupBox.className = "popup-box";
+
+    const textBox = document.createElement("div");
+    textBox.className = "message-text";
+    textBox.textContent = "";
+
+    const nextBtn = document.createElement("button");
+    nextBtn.className = "next-btn";
+    nextBtn.textContent = "Next";
+
+    popupBox.appendChild(textBox);
+    popupBox.appendChild(nextBtn);
+    popupBg.appendChild(popupBox);
+    document.body.appendChild(popupBg);
+
+
+    /* =========================
+       CUSTOM MUSIC DI SINI
+    ========================== */
+    const audio = new Audio("https://cdn.pixabay.com/download/audio/2021/10/20/audio_13ab05d2fe.mp3?filename=romantic-melody-12284.mp3");
+    audio.volume = 0.7;
+
+
+    /* =========================
+       TEXT PER KLIK
+    ========================== */
+
+    // *** EDIT TEKSNYA DI SINI ***
+    const messages = [
+        "🎉 Selamat Ulang Tahun! 🎉",
+        "Hari ini spesial banget, sama kayak kamu.",
+        "Semoga semua mimpi indahmu berjalan satu per satu.",
+        "Terima kasih sudah jadi orang baik di hidup banyak orang.",
+        "Dan… semoga hari ini membawa senyum besar untukmu 💗",
+        "Sekarang saatnya buka hadiahmu!"
+    ];
+
+    let idx = 0;
+
+    function showNextText() {
+        if (idx < messages.length) {
+            textBox.textContent = messages[idx];
+            idx++;
+        } else {
+            // sudah habis → redirect
+            window.location.href = "https://frisy-a.github.io/19November/flower.html";
+        }
+    }
+
+
+    /* =========================
+       EVENT HANDLER
+    ========================== */
+
+    // buka popup
+    btn.addEventListener("click", () => {
+        popupBg.classList.add("active");
+        audio.play().catch(()=>{});   // musik mulai
+        idx = 0;
+        showNextText();               // tampilkan text pertama
+    });
+
+    // tombol next → tampilkan kalimat berikutnya
+    nextBtn.addEventListener("click", () => {
+        showNextText();
+    });
+}
 
 
 
 
 window.onload = initMic;
+
 
 
 
