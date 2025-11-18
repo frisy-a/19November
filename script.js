@@ -783,12 +783,12 @@ function showGiftButton() {
     document.body.appendChild(audio);
 
     //suara huruf
-    const typeSound = document.createElement("audio");
-    const typeSource = document.createElement("source");
-    typeSource.src = "typing.mp3"; // suara ketik pendek
-    typeSource.type = "audio/mpeg";
-    typeSound.appendChild(typeSource);
-    document.body.appendChild(typeSound);
+   // const typeSound = document.createElement("audio");
+    //const typeSource = document.createElement("source");
+    //typeSource.src = "typing.mp3"; // suara ketik pendek
+    //typeSource.type = "audio/mpeg";
+    //typeSound.appendChild(typeSource);
+//    document.body.appendChild(typeSound);
 
     /* =========================
        TEKS
@@ -866,6 +866,7 @@ function showGiftButton() {
 
 
 window.onload = initMic;
+
 
 
 
