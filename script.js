@@ -300,6 +300,15 @@ function showGiftButton() {
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             transform: scale(0.8);
             transition: transform .4s ease;
+            
+            /* FIX: membuat teks terlihat */
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .popup-box h3 {
+            margin-top: 0;
+            color: #ff4d79; /* warna judul */
         }
 
         .popup-bg.active {
@@ -378,24 +387,24 @@ function showGiftButton() {
     /* =========================
        EVENT CLICK
     ========================== */
-    // Klik tombol hadiah → popup muncul
     btn.addEventListener("click", () => {
         popupBg.classList.add("active");
     });
 
-    // Klik tutup → popup hilang + redirect
     closeBtn.addEventListener("click", () => {
         popupBg.classList.remove("active");
 
         setTimeout(() => {
             window.location.href = "https://frisy-a.github.io/19November/flower.html";
-        }, 300); // beri waktu animasi menutup
+        }, 300);
     });
 }
 
 
 
+
 window.onload = initMic;
+
 
 
 
