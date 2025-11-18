@@ -150,7 +150,7 @@ function extinguishFlame() {
 // ============================
 //       SHOW GIFT BUTTON
 // ============================
-function showGiftButton() {
+/*function showGiftButton() {
     const btn = document.createElement('a');
     btn.className = "gift-button";
     btn.href = "https://frisy-a.github.io/19November/flower.html";
@@ -166,6 +166,70 @@ function showGiftButton() {
         btn.style.opacity = "1";
     }, 100);
 }
+*/
+function showGiftButton() {
+    // --- Buat CSS melalui JavaScript ---
+    const style = document.createElement("style");
+    style.textContent = `
+        .gift-button {
+            display: inline-block;
+            padding: 14px 26px;
+            background: linear-gradient(135deg, #ff4d79, #ff7aa8);
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(255, 105, 135, 0.4);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, opacity 0.8s ease;
+            opacity: 0;
+
+            animation: softGlow 2.5s infinite alternate ease-in-out,
+                       floating 3s ease-in-out infinite;
+        }
+
+        .gift-button:hover {
+            transform: scale(1.09);
+            box-shadow: 0 12px 25px rgba(255, 105, 135, 0.6);
+        }
+
+        @keyframes softGlow {
+            0% { box-shadow: 0 0 10px rgba(255, 120, 150, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(255, 120, 150, 0.9); }
+        }
+
+        @keyframes floating {
+            0%   { transform: translateY(0); }
+            50%  { transform: translateY(-6px); }
+            100% { transform: translateY(0); }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // --- Cari/siapkan container ---
+    let giftButtonContainer = document.getElementById("giftButtonContainer");
+    if (!giftButtonContainer) {
+        giftButtonContainer = document.createElement("div");
+        giftButtonContainer.id = "giftButtonContainer";
+        document.body.appendChild(giftButtonContainer);
+    }
+
+    // --- Buat tombol ---
+    const btn = document.createElement("a");
+    btn.className = "gift-button";
+    btn.href = "https://frisy-a.github.io/19November/flower.html";
+    btn.textContent = "🎁 Buka Hadiah";
+    btn.style.opacity = "0";
+
+    giftButtonContainer.appendChild(btn);
+
+    // --- Fade-in ---
+    setTimeout(() => {
+        btn.style.opacity = "1";
+    }, 100);
+}
+
 
 window.onload = initMic;
+
 
