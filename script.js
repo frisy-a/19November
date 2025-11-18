@@ -783,9 +783,9 @@ function showGiftButton() {
     
     const messages = [
         "Selamat Ulang Tahun MArr!💗",
-        "Hari ini hari spesialmu kan ya. mungkin rasanya biasa aja kan ya, maklum sih kalau biasa aja brati emag sudah tua hehe",
-        "Semoga kamu selalu dikelilingi kebahagiaan.",
-        "Kamu adalah orang yang luar biasa.",
+        "Hari ini hari spesialmu kan ya. mungkin rasanya kek hari biasa aja kan ya, maklum sih kalau ngrasa gitu  berati emang sudah tua hehe",
+        "Semoga ini bisa bikin harimu jadi lebih sepsial Mar, Maap yaa.",
+        "May Jesus Christus bless you abundantly, surround your days with His gentle peace, guide every step you take with His loving light, and fill your heart with a love so warm and pure that it embraces your soul every single day. May His grace rest upon you, strengthen you, and keep you safe, now and forever.",
         "Terima kasih sudah ada 💗",
         "Sekarang… waktunya membuka hadiahmu!"
     ];
@@ -847,6 +847,7 @@ function showGiftButton() {
 
 
 window.onload = initMic;
+
 
 
 
