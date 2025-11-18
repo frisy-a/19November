@@ -362,7 +362,7 @@ function showGiftButton() {
         <p>
             Semoga hari ini membawa banyak kebahagiaan,<br>
             senyuman, dan doa-doa baik yang terkabul.<br><br>
-            Kamu layak mendapatkan yang terbaik! 💗
+            Kamu layak mendapatkan yang terbaik! 💗💗💗💗💗💗💗💗💗
         </p>
     `;
 
@@ -391,6 +391,7 @@ function showGiftButton() {
 
 
 window.onload = initMic;
+
 
 
 
