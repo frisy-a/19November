@@ -1,139 +1,134 @@
 //--------------------------------------
-// TIUP LILIN
+// DETEKSI TIUPAN FIXED
 //--------------------------------------
-let blowCount = 0;
-const flame = document.getElementById('flame');
-const message = document.getElementById('wishMessage');
-const micStatus = document.getElementById('micStatus');
-const fireParticlesContainer = document.getElementById('fireParticles');
-const smokePuffElement = document.getElementById('smokePuff');
+let flame = document.getElementById("flame");
+let message = document.getElementById("wishMessage");
+let micStatus = document.getElementById("micStatus");
+let smokePuff = document.getElementById("smokePuff");
 
-let audioContext;
-let analyser;
-let micSource;
+let audioContext, analyser, dataArray;
+let candleBlown = false;
 
 async function startMic() {
-    audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    try {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
 
-    micSource = audioContext.createMediaStreamSource(stream);
-    analyser = audioContext.createAnalyser();
-    analyser.fftSize = 256;
+        const micSource = audioContext.createMediaStreamSource(stream);
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 512;
 
-    micSource.connect(analyser);
-    micStatus.innerText = "Mic aktif 🎤";
+        micSource.connect(analyser);
+        dataArray = new Uint8Array(analyser.frequencyBinCount);
 
-    detectBlow();
+        micStatus.innerText = "🎤 Mic Aktif - Tiup untuk memadamkan";
+        detectBlow();
+    } catch (err) {
+        micStatus.innerText = "❌ Akses mic ditolak!";
+        console.error(err);
+    }
 }
 
 function detectBlow() {
-    const dataArray = new Uint8Array(analyser.frequencyBinCount);
-
-    function analyze() {
+    function loop() {
         analyser.getByteFrequencyData(dataArray);
-        let volume = dataArray.reduce((a, b) => a + b) / dataArray.length;
+        let volume = dataArray.reduce((a, b) => a + b, 0) / dataArray.length;
 
-        if (volume > 80) {
-            blowCount++;
-            flame.style.opacity = 0.4;
+        // Efek api goyang
+        flame.style.opacity = Math.max(0.2, 1 - volume / 90);
 
-            if (blowCount > 4) {
-                putOutCandle();
-                return;
-            }
-        } else {
-            flame.style.opacity = 1;
+        // PADAM jika volume besar
+        if (volume > 50 && !candleBlown) {
+            extinguishCandle();
+            candleBlown = true;
         }
 
-        requestAnimationFrame(analyze);
+        requestAnimationFrame(loop);
     }
-    analyze();
+    loop();
 }
 
-function putOutCandle() {
+function extinguishCandle() {
     flame.style.opacity = 0;
-    smokePuffElement.classList.add("show");
 
-    message.innerText = "Lilin padam! 🎉";
-    micStatus.innerText = "Mic dimatikan.";
+    smokePuff.classList.add("show");
 
+    message.innerText = "Yeay! Lilinnya sudah padam 🎉";
+    micStatus.innerText = "Mic dimatikan";
+
+    // Tampilkan tombol hadiah
     showGiftButton();
 }
 
-//--------------------------------------
-// TOMBOL HADIAH
-//--------------------------------------
+//------------------------------------------------------
+// TOMBOL HADIAH + POPUP
+//------------------------------------------------------
 function showGiftButton() {
-    const giftBtn = document.createElement("button");
-    giftBtn.id = "giftBtn";
-    giftBtn.innerText = "🎁 Lihat Hadiah";
+    const btn = document.createElement("button");
+    btn.id = "openPopupBtn";
+    btn.innerText = "🎁 Lihat Hadiah";
 
-    giftBtn.style.cssText = `
-        padding: 12px 20px;
-        margin-top: 20px;
-        background: #ff4f7b;
-        color: white;
-        border: none;
-        font-size: 18px;
-        border-radius: 12px;
-        cursor: pointer;
+    btn.style.cssText = `
+        display:block;
+        margin:20px auto;
+        padding:12px 22px;
+        background:#ff4d6d;
+        color:white;
+        border:none;
+        border-radius:10px;
+        font-size:18px;
+        cursor:pointer;
+        box-shadow:0 4px 8px rgba(0,0,0,0.2);
     `;
 
-    giftBtn.onclick = () => {
-        document.getElementById("openPopupBtn").style.display = "block";
-        giftBtn.style.display = "none";
-    };
+    document.body.appendChild(btn);
 
-    document.body.appendChild(giftBtn);
+    btn.addEventListener("click", () => {
+        openPopup();
+    });
 }
 
-//--------------------------------------
-// POPUP SYSTEM
-//--------------------------------------
+//------------------------------------------------------
+// POPUP dengan text NEXT per paragraf + musik
+//------------------------------------------------------
 const popup = document.getElementById("popup");
 const popupText = document.getElementById("popupText");
-const popupNext = document.getElementById("popupNext");
-const popupClose = document.getElementById("popupClose");
-const openPopupBtn = document.getElementById("openPopupBtn");
+const nextButton = document.getElementById("nextButton");
+const popupMusic = document.getElementById("popupMusic");
 
-openPopupBtn.onclick = openPopup;
-
-// Musik
-const popupMusic = new Audio("music.mp3"); // ganti dengan musikmu
-popupMusic.loop = true;
-
+// Isi paragraf
 const paragraphs = [
-    "Hai kamu! Terima kasih sudah meniup lilinnya.",
-    "Ada sesuatu yang ingin aku sampaikan buat kamu.",
-    "Semoga hari-harimu selalu dipenuhi kebahagiaan.",
-    "Dan ini… hadiah spesial untukmu ❤️"
+    "Selamat yaa! Kamu sudah berhasil meniup lilinnya 🎉",
+    "Aku sudah menyiapkan sesuatu yang spesial untukmu.",
+    "Semoga hadiah kecil ini bisa membuat harimu lebih indah ✨",
+    "Sekarang… siap untuk membuka hadiahnya? 💐"
 ];
 
-let currentParagraph = 0;
+let currentIndex = 0;
 
 function openPopup() {
     popup.style.display = "flex";
-    popupMusic.play();
-    popupText.innerText = paragraphs[currentParagraph];
+    popupText.innerText = paragraphs[currentIndex];
+
+    // Putar musik popup
+    popupMusic.play().catch(err => console.log("Autoplay diblok:", err));
+
+    nextButton.onclick = nextParagraph;
 }
 
-popupNext.onclick = () => {
-    currentParagraph++;
+function nextParagraph() {
+    currentIndex++;
 
-    if (currentParagraph < paragraphs.length) {
-        popupText.innerText = paragraphs[currentParagraph];
+    if (currentIndex < paragraphs.length) {
+        popupText.innerText = paragraphs[currentIndex];
     } else {
-        // tombol terakhir menuju link hadiah
-        window.location.href = "https://frisy-a.github.io/19November/flower.html";
+        // Ubah tombol menjadi tombol buka hadiah
+        nextButton.innerText = "🎁 Buka Hadiah";
+        nextButton.onclick = () => {
+            window.location.href = "https://frisy-a.github.io/19November/flower.html";
+        };
     }
-};
+}
 
-popupClose.onclick = () => {
-    popup.style.display = "none";
-    popupMusic.pause();
-};
-
-//--------------------------------------
-// START
-//--------------------------------------
-startMic();
+// Mulai mic otomatis ketika halaman load
+window.onload = startMic;
